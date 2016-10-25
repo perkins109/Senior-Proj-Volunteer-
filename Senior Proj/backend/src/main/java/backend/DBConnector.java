@@ -4,14 +4,14 @@ import java.sql.*;
 public class DBConnector 
 {
 	static Connection con;
-	public DBConnector()
+	public DBConnector(String dbName)
 	{
 		try
 		{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			
 			con=DriverManager.getConnection( 
-			"jdbc:mysql://localhost:3306/names","root","staples");  
+			"jdbc:mysql://localhost:3306/" + dbName,"root","staples");  
 			
 			}
 		catch(Exception e)
