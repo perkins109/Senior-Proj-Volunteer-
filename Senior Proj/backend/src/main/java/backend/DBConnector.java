@@ -21,12 +21,12 @@ public class DBConnector
 	}
 	
 	
-	public ResultSet results() throws SQLException 
+	public ResultSet results(String select) throws SQLException 
 	{
 		ResultSet rs = null;
 		Statement stmt=con.createStatement();
 		try {
-			rs=stmt.executeQuery("select * from names");
+			rs=stmt.executeQuery(select);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
