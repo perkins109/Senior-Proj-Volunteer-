@@ -1,5 +1,6 @@
 package backend;
 
-public class Spark {
+public class Spark 
+{
 
 }
