@@ -38,6 +38,20 @@ CREATE TABLE `eventsAttended` (
 
 LOCK TABLES `eventsAttended` WRITE;
 /*!40000 ALTER TABLE `eventsAttended` DISABLE KEYS */;
+INSERT INTO 'eventsAttended' VALUES 
+  (1,1,'Test Event 2, Test Event 7'),
+  (2,2,'Test Event 1, Test Event 10, Test Event 4'),
+  (3,3,'Test Event 3'),
+  (4,4,''),
+  (5,5,'Park Cleanup Westville NJ, Test Event 5'),
+  (6,6,'Test Event 10, Test Event 11'),
+  (7,7,'Test Event 2, Test Event 5'),
+  (8,8,'Test Event 1, Test Event 2, Test Event 3, Test Event 7'),
+  (9,9,'Test Event 6'),
+  (10,10,''),
+  (11,11,'Test Event 2, Test Event 8, Test Event 11'),
+  (12,12,'Test Event 2, Test Event 9'),
+
 /*!40000 ALTER TABLE `eventsAttended` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,6 +78,19 @@ CREATE TABLE `eventsCreated` (
 
 LOCK TABLES `eventsCreated` WRITE;
 /*!40000 ALTER TABLE `eventsCreated` DISABLE KEYS */;
+INSERT INTO 'eventsCreated' VALUES
+  (1,1,'Test Event 2, Test Event 7'),
+  (2,2,'Test Event 1, Test Event 10, Test Event 4'),
+  (3,3,'Test Event 3'),
+  (4,4,''),
+  (5,5,'Park Cleanup Westville NJ, Test Event 5'),
+  (6,6,'Test Event 11'),
+  (7,7,''),
+  (8,8,''),
+  (9,9,'Test Event 6'),
+  (10,10,''),
+  (11,11,'Test Event 8'),
+  (12,12,'Test Event 9');
 /*!40000 ALTER TABLE `eventsCreated` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +120,19 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO 'users' VALUES
+  (1,'user1','password1','(555) 123-4567','user1@email.com','M','1 Wide St, Town, State, ZIP'),
+  (2,'user2','p@ssword2','(555) 890-1234','user2@email.com','F','2 Small Rd, Town, State, ZIP'),
+  (3,'user3','passw0rd3','(555) 567-8901','user3@email.com','M','3 Empty Dr, Town, State, ZIP'),
+  (4,'user4','1234qwer','(555) 234-5678','user4@email.com','M','4 Laughing Cir, Town, State, ZIP'),
+  (5,'user5','1f902e0d8a','(555) 901-2345','user5@email.com','F','5 Shephard Path, Town, State, ZIP'),
+  (6,'user6','password6','(555) 678-9012','user6@email.com','F','6 Mexico Ln, Town, State, ZIP'),
+  (7,'user7','password7','(555) 345-6789','user7@email.com','F','7 Hawthorne Rd, Town, State, ZIP'),
+  (8,'user8','password8','(555) 123-7654','user8@email.com','M','8 Log Dr, Town, State, ZIP'),
+  (9,'user9','password9','(555) 321-4567','user9@email.com','F','9 Arbor Ln, Town, State, ZIP'),
+  (10,'user10','password10','(555) 213-4687','user10@email.com','M','10 Rain St, Town, State, ZIP'),
+  (11,'user11','password11','(555) 123-8594','user11@email.com','M','11 Voluntold Cir, Town, State, ZIP'),
+  (12,'user12','password12','(555) 133-4217','user12@email.com','M','12 Hidden Path, Town, State, ZIP');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
