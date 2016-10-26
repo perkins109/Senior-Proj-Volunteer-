@@ -34,6 +34,23 @@ public class DBConnector
 		return rs;
 		
 	}
+	
+	public Boolean input(String select) throws SQLException 
+	{
+		ResultSet rs = null;
+		Statement stmt=con.createStatement();
+		
+		
+		try {
+			if(!(stmt.executeUpdate(select) == 0))
+				return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
 	public static void close() throws SQLException 
 	{
 		con.close();
