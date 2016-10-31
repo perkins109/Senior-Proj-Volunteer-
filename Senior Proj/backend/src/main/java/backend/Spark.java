@@ -58,7 +58,7 @@ public class Spark
 			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
 		});*/
 		
-		//TODO Get user events attended
+		//TODO Get user events created
 		/*get("/user/userName",  (request, response) -> {
 			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
 		});*/
