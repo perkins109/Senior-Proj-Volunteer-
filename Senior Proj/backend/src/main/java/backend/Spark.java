@@ -12,46 +12,77 @@ import spark.Route;
 
 public class Spark 
 {
-	private static DBConnector users = new DBConnector("USERS");
+	
 	private JsonUtil json = new JsonUtil();
+	
+	 
 	 
 	public static void main(String[] args) throws SQLException, Exception 
 	{
+		DBConnector db = new DBConnector("voluntold");
+		Users user = new Users(db);
+		Events event = new Events(db);
 	
-		DBConnector users = new DBConnector("USERS");
+		
 		JsonUtil json = new JsonUtil();
 		Gson gson = new Gson();
-
+		
+		//validate username and PW
 		get("/user/:userName/:password",  (request, response) -> {
-			return gson.toJson(userValidate(request.params(":userName"), request.params(":password")));
-			
+			return gson.toJson(user.userValidate(request.params(":userName"), request.params(":password")));
 		});  
 		
-		get("/makeuser/:userName/:password",  (request, response) -> {
-			return gson.toJson(addUser(request.params(":userName"), request.params(":password")));
-			
+		//Make a new user
+		get("/makeuser/:userName/:password/:email/:location/:phone/:sex",  (request, response) -> {
+			return gson.toJson(user.addUser(request.params(":userName"), request.params(":password"), request.params(":email"),
+					request.params(":location"), request.params(":phone"), request.params(":sex") ));
 		});  
+		
+		//search for events by name
+		get("/events/search/name/:eventName",  (request, response) -> {
+			return json.convertToJSON(event.nameSearch(request.params(":eventName")), "events");
+		});
+		
+		//search for events by date
+		get("/events/search/date/:yyyy-mm-dd",  (request, response) -> {
+			return json.convertToJSON(event.dateSearch(request.params(":yyyy-mm-dd")), "events");
+		}); 
+		
+		//retrive user info by user name, returns location, email, phone,
+		get("/user/:userName",  (request, response) -> {
+			return json.convertToJSON(user.getUser(request.params(":userName")), "user");
+		});
+		
+		//TODO Get user events attended
+		/*get("/user/userName",  (request, response) -> {
+			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
+		});*/
+		
+		//TODO Get user events attended
+		/*get("/user/userName",  (request, response) -> {
+			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
+		});*/
+		
+		//TODO make user profile editable should use PUT
+		/*put("/user/userName",  (request, response) -> {
+			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
+		});*/
+		
+		//Change the users password
+		get("/user/changePassword/:userName/:currentPassword/:newPassword",  (request, response) -> {
+			return gson.toJson(user.changePw(request.params(":userName"),request.params(":currentPassword"), request.params(":newPassword")));
+		});
+		
+		//Increases an events attendace counter by 1
+		get("/events/attend/:eventID",  (request, response) -> {
+			return gson.toJson(event.attend(request.params(":eventID")));
+			});
+		
+		
         
 	}
 	
-	private static boolean userValidate(String un, String pw) throws SQLException
-	{
-		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ pw +"' AND password = '"+pw+"'");
-		
-		if(rs.next())
-			return true;
-		return false;
-
-	}
 	
-	private static Boolean addUser(String un, String pw) throws SQLException
-	{
-		Boolean rs = users.input("INSERT INTO users (userName, password) VALUES( '"+un+"', '"+ pw +"' )");
-		
-		
-		return rs;
-
-	}
 
 	
 		

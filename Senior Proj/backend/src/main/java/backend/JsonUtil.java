@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 
 public class JsonUtil 
 {
-	public static JsonObject convertToJSON(ResultSet resultSet)
+	public static JsonObject convertToJSON(ResultSet resultSet, String name)
             throws Exception 
 	{
         JsonArray jsonArray = new JsonArray();
@@ -29,7 +29,7 @@ public class JsonUtil
         }
         
         JsonObject jsonObject = new JsonObject();
-        jsonObject .add("arrayName",jsonArray);
+        jsonObject .add(name,jsonArray);
         return jsonObject;
     }
 	
