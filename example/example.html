@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+  $.ajax({
+        url: "http://localhost:4567/names"
+    }).then(function(data) {
+      console.log(data);
+      var obj = JSON.parse(data);
+      document.getElementById("demo").innerHTML = obj.arrayName[1].first_name + " " + obj.arrayName[1].last_name;
+      for (var i = 0; i < data.length; i++) {
+          console.log(data[i]);
+              //console.log("Source: "+ data[i][name].id);
+              //$('.greeting-id').append(data[i][name].id);
+
+          /**
+            var counter = data.arrayName[i];
+            console.log(counter.first_name);
+          $('.greeting-id').append(counter.first_name);
+          **/
+      }
+      
+      
+       $('.greeting-id').append(data.id);
+       $('.greeting-content').append(data.first_name);
+       $('.greeting-id1').append(data.id);
+       $('.greeting-content1').append(data.first_name);
+    });
+});       
+</script>
+</head>
+ <body>
+        <div>
+            <p id="demo"></p>
+            <p class="greeting-id">The ID is </p>
+            <p class="greeting-content">The content is </p>
+            <p class="greeting-id1">The ID1 is </p>
+            <p class="greeting-content1">The content1 is </p>
+        </div>
+    </body>
+</html>
+
+
