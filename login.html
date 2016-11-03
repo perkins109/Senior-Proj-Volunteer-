@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	
+    
+    
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+	</script>
+    
+    <script src="jquery-3.1.1.js"></script>
+   
+    <script>
+        function login() {
+                var userEmail = document.getElementById('email').value;
+                var userPwd = document.getElementById('pwd').value;
+                var validate = "http://localhost:4567/user/" + userEmail + "/" + userPwd;
+            alert(validate);
+          
+                $.ajax({
+                    type: "GET",
+                    url: validate,
+                }).then(function(data) {
+                    console.log(data);
+                });
+                alert("i tried");
+                
+        }
+    </script>
+	
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+
+	<title>Voluntold</title>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="page-header">
+			
+			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+			<h1><img height="100" src="Voluntold.PNG" width="250">
+			</h1>
+
+			<p>The Volunteer Networking Page</p>
+		</div>
+	</div>
+
+	<div>
+		<form>
+			<div class="row">
+				<div class="col-md-4">
+				</div>
+
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="email">Email address:</label> <input class="form-control" id="email" type="email">
+					</div>
+				</div>
+
+				<div class="col-md-4">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+				</div>
+
+
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="pwd">Password:</label> <input class="form-control" id="pwd" type="password">
+					</div>
+				</div>
+
+
+				<div class="col-md-4">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-5">
+				</div>
+
+
+				<div class="col-md-2">
+					<button onclick="login()" id="submit" class="btn btn-default btn-block" type="submit" >Submit</button>
+				</div>
+
+
+				<div class="col-md-5">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12" style="height:25px;">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-5">
+				</div>
+
+
+				<div class="col-md-2">
+					<a href="www.Google.com">Forgot Username?</a>
+				</div>
+
+
+				<div class="col-md-5">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-5">
+				</div>
+
+
+				<div class="col-md-2">
+					<a href="www.Google.com">Forgot Password?</a>
+				</div>
+
+
+				<div class="col-md-5">
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+    
+     
+    
+</html>
