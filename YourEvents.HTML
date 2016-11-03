@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+	</script
+		
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	
+	<style>
+	       
+	       .navbar-default .navbar-nav > li > a{
+	           color: red;
+	           border-color: red;
+	           font-size: 1.8em;
+	       }
+	       
+	       
+	       .navbar-default {
+	           border-color: red;
+	           background-color: white;
+	       }
+	       
+	       .well {
+	           background-color: rgb(250,200,200);
+	           border-color: red;            
+	       }
+	       
+	       .divider {
+	 		   height: 2px;
+			   background-color: black;
+			   width:100%;
+	 		   display:block;
+	 		   overflow: hidden;
+     	    }
+	       
+	}
+	</style>
+	
+	<title>Voluntold</title>
+	
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="page-header">
+			
+			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+			<h1><img height="100" src="C:/Users/GIANLUCA/OneDrive/School/Senior%20Proj/Voluntold.PNG" width="250">
+			</h1>
+
+
+			<p>The Volunteer Networking Page</p>
+		</div>
+
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">Home</a>
+					</li>
+
+
+					<li>
+						<a href="#">Create Event</a>
+					</li>
+
+
+					<li>
+						<a href="#">Your Events</a>
+					</li>
+
+
+					<li>
+						<a href="#">Settings</a>
+					</li>
+				</ul>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-user"></span> Profile Name</a>
+					</li>
+
+
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<div>
+			<h3>Your Created Events</h3>
+		</div>
+
+		<hr class="divider">
+
+
+		<div class="well">
+			<a style="color:black;">All created events will go here</a> 
+			<!-- Insert loop function here that will display all events that have been created by this user -->
+		</div>
+
+
+		<div>
+			<h3>Your Attended Events</h3>
+		</div>
+
+		<hr class="divider divider-custom">
+
+
+		<div class="well">
+			<a style="color:black;">All attended events will go here</a> 
+			<!-- Insert loop function here that will display all events that have been created by this user -->
+		</div>
+	</div>
+</body>
+</html>
