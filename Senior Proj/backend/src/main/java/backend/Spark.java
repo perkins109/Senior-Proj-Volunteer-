@@ -88,7 +88,7 @@ public class Spark
 			System.out.println("and here");
 			event.add(pojo);
 			
-            return "The event has been added";
+            return "";
 		});
 		
 		
