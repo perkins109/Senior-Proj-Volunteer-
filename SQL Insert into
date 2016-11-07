@@ -1,0 +1,24 @@
+INSERT INTO events ( name, status, description, location, date, time, attendanceCOUNT, owner, contactEmail) VALUES
+  ( 'Park Cleanup', 'true', 'clean up the park', 'rowan university', '2016-10-10',  '2016-01-01 10:00:00' ,  0, 'nick', 'perkins109@gmail.com' );
+
+
+
+
+ALTER TABLE events MODIFY columnname INTEGER;
+
+
+INSERT INTO events ( name, status, description, location, date, time, attendanceCOUNT, owner, contactEmail) VALUES
+  ( 'beach cleanup', 'true', 'Clean the beach', 'Ocean City, NJ', '2016-11-10',  '2016-01-01 15:00:00' ,  0, 'mike', 'mike@gmail.com' );
+
+
+SELECT * FROM events WHERE name LIKE '%cleanup%';
+
+
+
+{"id":"1","name":"Soup Kitchen Prep","status":"true","description":"Feed the Hungry","location":"Somers Point, NJ","date":"2016-11-20","time":"2016-01-01 10:30:00.0","owner":"Harry","contactemail":"potter@gmail.com"}
+
+INSERT INTO events ( name, status, description, location, date, time, attendanceCOUNT, owner, contactEmail) VALUES
+  ( 'beach cleanup', 'true', 'Clean the beach', 'Ocean City, NJ', '2016-11-10',  '2016-01-01 15:00:00' ,  0, 'mike', 'mike@gmail.com' );
+
+ALTER TABLE events
+ALTER attendanceCOUNT SET DEFAULT '0'
