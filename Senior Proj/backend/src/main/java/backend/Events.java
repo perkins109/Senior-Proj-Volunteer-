@@ -14,7 +14,7 @@ public class Events
 	
 	public Events(DBConnector events) 
 	{
-		super();
+	
 		this.events = events;
 	}
 
