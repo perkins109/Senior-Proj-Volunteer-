@@ -10,10 +10,12 @@ import spark.Route;
 
 
 
+
 public class Spark 
 {
 	
 	private JsonUtil json = new JsonUtil();
+	private static EventPOJO pojo = new EventPOJO();
 	
 	 
 	 
@@ -22,6 +24,7 @@ public class Spark
 		DBConnector db = new DBConnector("voluntold");
 		Users user = new Users(db);
 		Events event = new Events(db);
+		
 	
 		
 		JsonUtil json = new JsonUtil();
@@ -77,6 +80,16 @@ public class Spark
 		get("/events/attend/:eventID",  (request, response) -> {
 			return gson.toJson(event.attend(request.params(":eventID")));
 			});
+		
+		//Post an event and save it the the database
+		post("/add/event", (request, response) -> {
+			System.out.println("I got here");
+			pojo = gson.fromJson(request.body(), EventPOJO.class);
+			System.out.println("and here");
+			event.add(pojo);
+			
+            return "The event has been added";
+		});
 		
 		
         

@@ -3,7 +3,7 @@ import java.sql.*;
 
 public class DBConnector 
 {
-	static Connection con;
+	private static Connection con;
 	public DBConnector(String dbName)
 	{
 		try
@@ -54,6 +54,11 @@ public class DBConnector
 	public static void close() throws SQLException 
 	{
 		con.close();
+	}
+	
+	public Connection getCon()
+	{
+		return con;
 	}
 	
 }
