@@ -1,0 +1,184 @@
+<!
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script>
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+    
+    <!-- GOOGLE MAPS -->
+    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+		
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	
+	<style>
+	       
+	       .navbar-default .navbar-nav > li > a{
+	           color: red;
+	           border-color: red;
+	           font-size: 1.8em;
+	       }
+	       
+	       
+	       .navbar-default {
+	           border-color: red;
+	           background-color: white;
+	       }
+	       
+	       .well {
+	           background-color: rgb(250,200,200);
+	           border-color: red;            
+	       }
+	       
+	       .divider {
+	 		   height: 2px;
+			   background-color: black;
+			   width:100%;
+	 		   display:block;
+	 		   overflow: hidden;
+     	    }
+        
+        .dropdown > dropdown-menu > li {
+            align-content: center;
+            color: red;
+        }
+	       
+	}
+	</style>
+	
+	<title>Voluntold</title>
+	
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="page-header">
+			
+			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+			<h1><img height="100" src="C:/Users/GIANLUCA/OneDrive/School/Senior%20Proj/Voluntold.PNG" width="250">
+			</h1>
+
+
+			<p>The Volunteer Networking Page</p>
+		</div>
+
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">Home</a>
+					</li>
+
+
+					<li>
+						<a href="#">Create Event</a>
+					</li>
+
+
+					<li>
+						<a href="#">Your Events</a>
+					</li>
+
+
+					<li>
+						<a href="#">Settings</a>
+					</li>
+				</ul>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-user"></span> Profile Name</a>
+					</li>
+
+
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+        <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+        <div class="form-group">
+  <label for="ZipCode">Enter Zip Code:</label>
+  <input type="text" class="form-control" id="Zip">
+</div>
+            </div>
+             <div class="col-md-2" style="text-align:center;">
+                 <div class="form-group"></div>
+                  <label for="ZipCode">Miles from Zip</label>
+            <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Miles from Zip
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+        <li>5</li>
+      <li>10</li>
+      <li>15</li>
+      <li>20</li>
+      <li>25+</li>
+  </ul>
+</div>
+            </div> </div>
+            <div class="col-md-4"></div>
+            </div>
+        <div class="row" style="height:400px;">
+            <div class="col-md-4"></div>
+        <div class="col-md-4" id="map" style="height:400px;"></div>
+        <div class="col-md-4"></div>
+            </div>
+        
+		   <script>
+function myMap() {
+  var mapCanvas = document.getElementById("map");
+  var mapCenter = new google.maps.LatLng(39.7099, -75.1189);
+  var mapOptions = {center: mapCenter, zoom: 15};
+  var map = new google.maps.Map(mapCanvas, mapOptions);    
+  var marker = new google.maps.Marker({position: mapCenter});
+
+    marker.setMap(map);
+    
+    var searchRadius = new google.maps.Circle({
+  center:mapCenter,
+  radius:500,
+  strokeColor:"#0000FF",
+  strokeOpacity:0.8,
+  strokeWeight:2,
+  fillColor:"#0000FF",
+  fillOpacity:0.4
+});
+    searchRadius.setMap(map);
+    
+    var infowindow = new google.maps.InfoWindow({
+  content:"This is where all your money has gone"
+  });
+
+infowindow.open(map,marker);
+}
+</script>
+        <hr class="divider">
+        
+        <h3>Search Results</h3>
+        <div class="well">
+			<a style="color:black;">All events within x miles go here</a> 
+			<!-- Insert loop function here that will display all events that have been created by this user -->
+		</div>
+        <!-- GOOGLE MAPS -->
+    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+		
+	</div>
+    
+ 
+</body>
+</html>
