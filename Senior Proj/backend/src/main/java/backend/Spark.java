@@ -56,18 +56,31 @@ public class Spark
 			return json.convertToJSON(user.getUser(request.params(":userName")), "user");
 		});
 		
-		//TODO Get user events attended
-		/*get("/user/userName",  (request, response) -> {
-			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
-		});*/
+		// Get user events attended
+		get("/userevents/eventsattended/:userName",  (request, response) -> {
+			
+			return json.convertToJSON(user.getEventsAtt(request.params(":userName")), "events");
+		});
 		
-		//TODO Get user events created
-		/*get("/user/userName",  (request, response) -> {
+		// get user events created
+		get("/userevents/eventscreated/:userName",  (request, response) -> {
+			return json.convertToJSON(user.getEventsCreated(request.params(":userName")), "events");
+		});
+		
+
+		/*//add user events created
+		get("/addeventcreated/:userName",  (request, response) -> {
 			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
 		});*/
 		
 		//TODO make user profile editable should use PUT
 		/*put("/user/userName",  (request, response) -> {
+			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
+		});*/
+		
+
+		//TODO PUT edit event
+		/*get("/user/userName",  (request, response) -> {
 			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
 		});*/
 		
@@ -81,6 +94,13 @@ public class Spark
 			return gson.toJson(event.attend(request.params(":eventID")));
 			});
 		
+		//adds an event to events attended db
+				get("/users/attend/:userName/:eventID",  (request, response) -> {
+					return gson.toJson(user.attend(request.params(":eventID"),request.params(":userName")));
+					});
+				
+		
+		
 		//Post an event and save it the the database
 		post("/add/event", (request, response) -> {
 			System.out.println("I got here");
@@ -90,6 +110,16 @@ public class Spark
 			
             return "";
 		});
+		
+		//Post an event and save it the the database
+				put("/edit/event/:eventID", (request, response) -> {
+					
+					pojo = gson.fromJson(request.body(), EventPOJO.class);
+					
+					event.edit(pojo, request.params(":eventID"));
+					
+		            return "";
+				});
 		
 		
         

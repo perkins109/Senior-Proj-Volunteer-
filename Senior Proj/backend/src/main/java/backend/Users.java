@@ -14,7 +14,7 @@ public class Users
 		this.users = users;
 	}
 
-	public static boolean userValidate(String un, String pw) throws SQLException
+	public boolean userValidate(String un, String pw) throws SQLException
 	{
 		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"' AND password = '"+pw+"'");
 		
@@ -24,7 +24,7 @@ public class Users
 
 	}
 	
-	public static Boolean addUser(String un, String pw, String em, String loc, String ph, String sex) throws SQLException
+	public Boolean addUser(String un, String pw, String em, String loc, String ph, String sex) throws SQLException
 	{
 		Boolean rs = users.input("INSERT INTO users (userName, password, email, homeLocation, phone, sex) VALUES"
 				+ "( '"+un+"', '"+ pw +"', '" + em + "', '"+ loc + "', '" + ph + "', '" + sex + "' )");
@@ -34,7 +34,7 @@ public class Users
 
 	}
 	
-	public static ResultSet getUser(String un) throws SQLException
+	public ResultSet getUser(String un) throws SQLException
 	{
 		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"'");
 		
@@ -49,6 +49,47 @@ public class Users
 		Boolean rs = users.input("UPDATE users SET password = '"+newPW +"' WHERE userName = '" + un + "' AND "
 				+ "password = '"+currentPW +"'");
 		
+		
+		return rs;
+
+	}
+	
+	public  ResultSet getEventsAtt(String un) throws SQLException
+	{
+		String id = null;
+		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"'");
+		
+		if(rs.next())
+			id = rs.getString("user_id");
+		ResultSet retVal = users.results("SELECT * FROM events, eventsAttended WHERE eventsAttended.user_id = '"+ id +"' AND eventsAttended.eventsAttended = events.id");
+		System.out.println("nick");
+
+		
+		return retVal;
+
+	}
+	
+	public  ResultSet getEventsCreated(String un) throws SQLException
+	{
+		String id = null;
+		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"'");
+		
+		if(rs.next())
+			id = rs.getString("user_id");
+		ResultSet retVal = users.results("SELECT * FROM events, eventsCreated WHERE eeventsCreated.user_id = '"+ id +"' AND eventsCreated.eventsCreated = events.id");
+		System.out.println("nick");
+
+		
+		return retVal;
+
+	}
+	
+	public Boolean attend(String eventID, String un) throws SQLException 
+	{
+		
+		Boolean rs = users.input("INSERT INTO eventsAttended (user_id, eventsAttended) VALUES"
+				+ "((SELECT user_id FROM users WHERE userName = '"+ un +"'), '"+ eventID + "')");
+				
 		
 		return rs;
 

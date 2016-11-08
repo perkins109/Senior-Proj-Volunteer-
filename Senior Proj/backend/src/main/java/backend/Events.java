@@ -63,14 +63,45 @@ public class Events
 		
 			      
 			      preparedStmt.execute();
+			      Boolean rs = events.input("INSERT INTO eventsCreated (user_id, eventsCreated)"
+			      		+ "values((SELECT user_id FROM users WHERE userName = '"+ event.getOwner() +"'),LAST_INSERT_ID())");   
+			      
 		}
 		catch(Exception e)
 		{
 			System.out.println(e.toString());
 		}
+	}
 			     
 		
-		
+		public static void edit(EventPOJO event, String id) throws SQLException 
+		{
+			try
+			{
+			 String query = "UPDATE events SET name = ?, description = ?, location = ?, date = ?, time = ?, "
+			 		+ "contactEmail = ? where id = '" + id + "'";
+
+				      // create the mysql insert preparedstatement
+			 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
+				      preparedStmt.setString (1, event.getName());
+				      preparedStmt.setString (2, event.getDescription());
+				      preparedStmt.setString (3, event.getLocation());
+				      preparedStmt.setString (4, event.getDate());
+				      preparedStmt.setString (5, event.getTime());
+				      preparedStmt.setString (6, event.getContactEmail());
+			
+				      
+				      preparedStmt.execute();
+				     
+				      
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.toString());
+			}
+				     
+			
+			
 	}
 
 }
