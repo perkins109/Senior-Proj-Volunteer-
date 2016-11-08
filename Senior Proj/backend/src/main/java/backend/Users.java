@@ -95,4 +95,63 @@ public class Users
 
 	}
 
+	public String add(UserPOJO userpojo) 
+	{
+		try
+		{
+		 String query = "INSERT INTO users ( userName, password, phone, email, sex, homelocation)"
+			        + " values (?, ?, ?, ?, ?, ?)";
+
+			      // create the mysql insert preparedstatement
+		 		java.sql.PreparedStatement preparedStmt = users.getCon().prepareStatement(query);
+			      preparedStmt.setString (1, userpojo.getUsername() );
+			      preparedStmt.setString (2, userpojo.getPassword());
+			      preparedStmt.setString (3, userpojo.getPhone());
+			      preparedStmt.setString (4, userpojo.getEmail());
+			      preparedStmt.setString (5, userpojo.getSex());
+			      preparedStmt.setString (6, userpojo.getHomelocation());
+			   
+		
+			      
+			      preparedStmt.execute();
+			      return "true";
+			      
+		}
+		catch(Exception e)
+		{
+			return e.toString();
+		}
+		
+	}
+
+	public String edit(UserPOJO user, String un) 
+	{
+		try
+		{
+		 String query = "UPDATE users SET  phone = ?, email = ?, sex = ?, "
+		 		+ "homelocation = ? where userName = '" + un + "'";
+
+			      // create the mysql insert preparedstatement
+		 		java.sql.PreparedStatement preparedStmt = users.getCon().prepareStatement(query);
+			      preparedStmt.setString (1, user.getPhone());
+			      preparedStmt.setString (2, user.getEmail());
+			      preparedStmt.setString (3, user.getSex());
+			      preparedStmt.setString (4, user.getHomelocation());
+			  
+		
+			      
+			      preparedStmt.execute();
+			      
+			      return "true";
+			     
+			      
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+			return e.toString();
+		}
+		
+	}
+
 }

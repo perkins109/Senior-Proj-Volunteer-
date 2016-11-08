@@ -15,7 +15,8 @@ public class Spark
 {
 	
 	private JsonUtil json = new JsonUtil();
-	private static EventPOJO pojo = new EventPOJO();
+	private static EventPOJO eventpojo = new EventPOJO();
+	private static UserPOJO userpojo = new UserPOJO();
 	
 	 
 	 
@@ -35,11 +36,11 @@ public class Spark
 			return gson.toJson(user.userValidate(request.params(":userName"), request.params(":password")));
 		});  
 		
-		//Make a new user
+		/*//Make a new user
 		get("/makeuser/:userName/:password/:email/:location/:phone/:sex",  (request, response) -> {
 			return gson.toJson(user.addUser(request.params(":userName"), request.params(":password"), request.params(":email"),
 					request.params(":location"), request.params(":phone"), request.params(":sex") ));
-		});  
+		});  */
 		
 		//search for events by name
 		get("/events/search/name/:eventName",  (request, response) -> {
@@ -68,22 +69,13 @@ public class Spark
 		});
 		
 
-		/*//add user events created
-		get("/addeventcreated/:userName",  (request, response) -> {
-			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
-		});*/
-		
+				
 		//TODO make user profile editable should use PUT
 		/*put("/user/userName",  (request, response) -> {
 			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
 		});*/
 		
-
-		//TODO PUT edit event
-		/*get("/user/userName",  (request, response) -> {
-			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
-		});*/
-		
+			
 		//Change the users password
 		get("/user/changePassword/:userName/:currentPassword/:newPassword",  (request, response) -> {
 			return gson.toJson(user.changePw(request.params(":userName"),request.params(":currentPassword"), request.params(":newPassword")));
@@ -104,23 +96,46 @@ public class Spark
 		//Post an event and save it the the database
 		post("/add/event", (request, response) -> {
 			System.out.println("I got here");
-			pojo = gson.fromJson(request.body(), EventPOJO.class);
+			eventpojo = gson.fromJson(request.body(), EventPOJO.class);
 			System.out.println("and here");
-			event.add(pojo);
+			event.add(eventpojo);
 			
             return "";
 		});
 		
 		//Post an event and save it the the database
-				put("/edit/event/:eventID", (request, response) -> {
+		put("/edit/event/:eventID", (request, response) -> {
 					
-					pojo = gson.fromJson(request.body(), EventPOJO.class);
+			eventpojo = gson.fromJson(request.body(), EventPOJO.class);
 					
-					event.edit(pojo, request.params(":eventID"));
+			event.edit(eventpojo, request.params(":eventID"));
 					
-		            return "";
-				});
+		     return "";
+		});
 		
+		post("/makeuser", (request, response) -> {
+			
+			//System.out.println("here");
+			
+			userpojo = gson.fromJson(request.body(), UserPOJO.class);
+			//System.out.println("here");
+			
+			
+			
+            return user.add(userpojo);
+		});
+		
+		
+		//Post an event and save it the the database
+				put("/edit/users", (request, response) -> {
+						System.out.println("here");	
+					userpojo = gson.fromJson(request.body(), UserPOJO.class);
+					System.out.println("here");	
+				     return user.edit(userpojo, userpojo.getUsername());
+				});
+				
+				
+				
 		
         
 	}
