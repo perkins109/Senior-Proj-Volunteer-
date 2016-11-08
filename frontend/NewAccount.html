@@ -1,0 +1,114 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- AWS Cognito -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.9.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Voluntold</title>
+
+    <script>
+        function createAccount() {
+                var username = document.getElementById('username').value;
+                var email= document.getElementById('Email').value;
+                var phoneNumber = document.getElementById('PhoneNumber').value;
+                var password = document.getElementById('password').value;
+                var confirmPassword = document.getElementById('Confirmpassword').value;
+                if (password === confirmPassword) {
+                  var validate =
+                    "http://localhost:4567/makeuser/" + username + "/" + password + "/" + email + "/" + phoneNumber;
+                  $.ajax({
+                    type: "GET",
+                    url: validate,
+                  }).then(function(data) {
+                    console.log(data);
+                  });  
+                } else {
+                  alert("Passwords do not match")
+                }
+                
+        }
+    </script>
+
+    </head>
+    <body>
+
+
+      <div class="container-fluid">
+        <div class="page-header">
+          <h1><img src="C:/Users/Brian/Documents/Voluntold HTML/Voluntold.png" height="100" width="250"></h1>
+          <p>The Volunteer Networking Page</p>
+          </div>
+    </div>
+     <p align="center">Create New Account</p>
+    <div>
+        
+    <form>
+  
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+  <div class="col-xs-4">
+    <input class="form-control" type="text" placeholder="User Name" id="username">
+  </div>
+    <div class="col-xs-4"></div>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+  <div class="col-xs-4">
+    <input class="form-control" type="password" placeholder="Password" id="password">
+  </div>
+    <div class="col-xs-4"></div>
+</div>
+
+<div class="form-group row">
+     <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="password" placeholder="Confirm Password" id="Confirmpassword">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        
+    <div class="form-group row">
+     <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="Email" placeholder="YourEmail@Voluntold.com" id="Email">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="tel" placeholder="555-123-4567" id="PhoneNumber">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        <div align="center">
+<input type="submit" value="Submit" >
+        </div> 
+    </form>
+    </div>
+
+
+    <script type="text/javascript">
+    //Initialize the Amazon Cognito credentials provider
+    AWS.config.region = 'us-east-1'; // Region
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:8df560c2-12ca-4a34-9505-5f1d7e3d0ef1',
+    });
+    //Initialize the Cognito Sync client
+          });
+       });
+    });
+    </script>
+    </html>
