@@ -22,16 +22,12 @@
                 var userEmail = document.getElementById('email').value;
                 var userPwd = document.getElementById('pwd').value;
                 var validate = "http://localhost:4567/user/" + userEmail + "/" + userPwd;
-            alert(validate);
-          
                 $.ajax({
                     type: "GET",
                     url: validate,
                 }).then(function(data) {
-                    console.log(data);
+                    window.location="main.HTML";
                 });
-                alert("i tried");
-                
         }
     </script>
 	
@@ -136,7 +132,7 @@
 
 				<div class="col-md-2">
                     <!-- Send to create new user page -->
-					<a href="//Send to create new user page">Create New User?</a>
+					<a href="NewAccount.html">Create New User?</a>
 				</div>
 
 
