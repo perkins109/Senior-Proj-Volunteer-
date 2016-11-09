@@ -16,6 +16,8 @@ public class haversine {
     }
     public static void main(String[] args) {
     	Map<Double,Double> locations = new HashMap<Double,Double>();
+        
+        //manually populating HashMap locations
     	locations.put(36.12, -86.67);
     	locations.put(33.94, -118.40);
     	locations.put(32.84, -94.74);
@@ -24,9 +26,14 @@ public class haversine {
     	locations.put(38.9102, -118.9341);
     	locations.put(37.31, -119.1230);
     	locations.put(40.4123, -118.1239);
+        
     	Set<Double> keys = locations.keySet();
+        
+        //Hardcoded values for base location coordinates
     	double baselat = 36.12;
     	double baselong = -86.67;
+        
+        //iterates over the hashmap to print the distance between the base location and each lat/long pair
     	for(Double d : keys)
     		System.out.println("Location 2: " + d + " " + locations.get(d) + " \nDistance between: " + haversine(baselat, baselong,d,locations.get(d)) + " km.");
     }
