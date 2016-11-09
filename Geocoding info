@@ -1,3 +1,6 @@
 https://developers.google.com/maps/documentation/geocoding/start?hl=en
 
 contains documentation necessary to convert addresses to longitude and latitude, returns JSON format information.
+
+sample URL: https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+  our api key can be found in the API key file.
