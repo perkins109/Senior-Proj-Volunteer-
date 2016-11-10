@@ -1,0 +1,11 @@
+Event JSON format when searching by location Note distance is in miles
+
+{"id":"10","name":"10k Run","status":"true","description":"Run for cancer","date":"2016-12-20","time":"2016-01-01 10:30:00.0","attendancecount":"0","owner":"admin","contactemail":"potter@gmail.com","lat":"39.339838","lng":"-75.09773439999998","distance":"0.00019565995849694356"}
+
+Normal event json format
+
+{"id":"10","name":"Christmas Contest","status":"true","description":"Holiday up the town","date":"2016-12-20","time":"2016-01-01 10:30:00.0","attendancecount":"0","owner":"admin","contactemail":"potter@gmail.com","lat":"39.339838","lng":"-75.09773439999998"}
+
+new user json
+
+{"user_id":"17","username":"ned","password":"stark","phone":"6099263101","email":"ts@strark.com","sex":"M","homelocation":"08244"}
