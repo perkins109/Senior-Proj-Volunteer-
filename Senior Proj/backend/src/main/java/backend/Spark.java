@@ -79,7 +79,7 @@ public class Spark
 			return gson.toJson(event.attend(request.params(":eventID")));
 			});
 		
-		//adds an event to events attended db
+		//adds an event to events attended database
 		get("/users/attend/:userName/:eventID",  (request, response) -> {
 			return gson.toJson(user.attend(request.params(":eventID"),request.params(":userName")));
 			});
