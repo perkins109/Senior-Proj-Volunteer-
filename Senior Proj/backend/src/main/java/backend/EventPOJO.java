@@ -5,13 +5,34 @@ public class EventPOJO
 	private String name,
 				   status,
 				   description,
-				   location,
 				   date,
 				   time,
 				   owner,
-				   contactemail;
+				   contactemail,
+				   lat,
+				   lng;
 
 	
+
+	public String getLat() 
+	{
+		return lat;
+	}
+
+	public void setLat(String lat) 
+	{
+		this.lat = lat;
+	}
+
+	public String getLng() 
+	{
+		return lng;
+	}
+
+	public void setLng(String lng) 
+	{
+		this.lng = lng;
+	}
 
 	public String getName() 
 	{
@@ -45,15 +66,7 @@ public class EventPOJO
 		this.description = description;
 	}
 
-	public String getLocation()
-	{
-		return location;
-	}
 
-	public void setLocation(String location)
-	{
-		this.location = location;
-	}
 
 	public String getDate() 
 	{
@@ -95,12 +108,15 @@ public class EventPOJO
 		this.contactemail = contactEmail;
 	}
 	
+
 	@Override
 	public String toString() 
 	{
-		return "EventPOJO [name=" + name + ", status=" + status + ", description=" + description + ", location="
-				+ location + ", date=" + date + ", time=" + time + ", owner=" + owner + ", contactEmail=" + contactemail
-				+ "]";
+		return "EventPOJO [name=" + name + ", status=" + status + ", description=" + description + ", date=" + date
+				+ ", time=" + time + ", owner=" + owner + ", contactemail=" + contactemail + ", lat=" + lat + ", lng="
+				+ lng + "]";
 	}
+	
+	
 
 }

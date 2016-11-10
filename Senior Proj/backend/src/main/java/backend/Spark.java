@@ -69,13 +69,6 @@ public class Spark
 		});
 		
 
-				
-		//TODO make user profile editable should use PUT
-		/*put("/user/userName",  (request, response) -> {
-			return json.convertToJSON(event.dateSearch(request.params("userName")), "events");
-		});*/
-		
-			
 		//Change the users password
 		get("/user/changePassword/:userName/:currentPassword/:newPassword",  (request, response) -> {
 			return gson.toJson(user.changePw(request.params(":userName"),request.params(":currentPassword"), request.params(":newPassword")));
@@ -87,9 +80,14 @@ public class Spark
 			});
 		
 		//adds an event to events attended db
-				get("/users/attend/:userName/:eventID",  (request, response) -> {
-					return gson.toJson(user.attend(request.params(":eventID"),request.params(":userName")));
-					});
+		get("/users/attend/:userName/:eventID",  (request, response) -> {
+			return gson.toJson(user.attend(request.params(":eventID"),request.params(":userName")));
+			});
+				
+		//search for events by location
+		get("/events/search/location/:distance/:lat/:long",  (request, response) -> {
+			return json.convertToJSON(event.locationSearch(request.params(":lat"), request.params(":long"), request.params(":distance")), "events");
+			}); 
 				
 		
 		
@@ -113,6 +111,7 @@ public class Spark
 		     return "";
 		});
 		
+		//Make a new user 
 		post("/makeuser", (request, response) -> {
 			
 			//System.out.println("here");
@@ -127,12 +126,15 @@ public class Spark
 		
 		
 		//Post an event and save it the the database
-				put("/edit/users", (request, response) -> {
-						System.out.println("here");	
-					userpojo = gson.fromJson(request.body(), UserPOJO.class);
-					System.out.println("here");	
-				     return user.edit(userpojo, userpojo.getUsername());
-				});
+		put("/edit/users", (request, response) -> {
+			System.out.println("here");	
+			userpojo = gson.fromJson(request.body(), UserPOJO.class);
+			System.out.println("here");	
+			return user.edit(userpojo, userpojo.getUsername());
+		});
+		
+		
+		
 				
 				
 				

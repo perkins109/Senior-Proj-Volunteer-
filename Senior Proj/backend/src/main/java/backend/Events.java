@@ -43,55 +43,93 @@ public class Events
 		return rs;
 	}
 	
-	public static void add(EventPOJO event) throws SQLException 
+	public String add(EventPOJO event) throws SQLException 
 	{
 		try
 		{
-		 String query = "INSERT INTO events ( name, status, description, location, date, time, owner, contactEmail)"
-			        + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		 String query = "INSERT INTO events ( name, status, description, date, time, owner, contactEmail, lat, lng)"
+			        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			      // create the mysql insert preparedstatement
 		 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
 			      preparedStmt.setString (1, event.getName());
 			      preparedStmt.setString (2, event.getStatus());
 			      preparedStmt.setString (3, event.getDescription());
-			      preparedStmt.setString (4, event.getLocation());
-			      preparedStmt.setString (5, event.getDate());
-			      preparedStmt.setString (6, event.getTime());
-			      preparedStmt.setString (7, event.getOwner());
-			      preparedStmt.setString (8, event.getContactEmail());
+			      preparedStmt.setString (4, event.getDate());
+			      preparedStmt.setString (5, event.getTime());
+			      preparedStmt.setString (6, event.getOwner());
+			      preparedStmt.setString (7, event.getContactEmail());
+			      preparedStmt.setString (8, event.getLat());
+			      preparedStmt.setString (9, event.getLng());
 		
 			      
 			      preparedStmt.execute();
 			      Boolean rs = events.input("INSERT INTO eventsCreated (user_id, eventsCreated)"
 			      		+ "values((SELECT user_id FROM users WHERE userName = '"+ event.getOwner() +"'),LAST_INSERT_ID())");   
 			      
+			      return "true";
+			      
 		}
 		catch(Exception e)
 		{
 			System.out.println(e.toString());
+			 return e.toString();
 		}
 	}
 			     
 		
-		public static void edit(EventPOJO event, String id) throws SQLException 
+		public String edit(EventPOJO event, String id) throws SQLException 
 		{
 			try
 			{
-			 String query = "UPDATE events SET name = ?, description = ?, location = ?, date = ?, time = ?, "
-			 		+ "contactEmail = ? where id = '" + id + "'";
+			 String query = "UPDATE events SET name = ?, description = ?, date = ?, time = ?, "
+			 		+ "contactEmail = ?, lat = ?, lng = ? where id = '" + id + "'";
 
 				      // create the mysql insert preparedstatement
 			 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
 				      preparedStmt.setString (1, event.getName());
 				      preparedStmt.setString (2, event.getDescription());
-				      preparedStmt.setString (3, event.getLocation());
-				      preparedStmt.setString (4, event.getDate());
-				      preparedStmt.setString (5, event.getTime());
-				      preparedStmt.setString (6, event.getContactEmail());
+				      preparedStmt.setString (3, event.getDate());
+				      preparedStmt.setString (4, event.getTime());
+				      preparedStmt.setString (5, event.getContactEmail());
+				      preparedStmt.setString (6, event.getLat());
+				      preparedStmt.setString (7, event.getLng());
 			
 				      
 				      preparedStmt.execute();
+				     
+				      return "true";
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.toString());
+				return e.toString();
+			}
+		
+	}
+
+		
+		public ResultSet locationSearch(String lat, String lng, String radius) throws SQLException 
+		{
+			ResultSet rs = null;
+			try
+			{
+			 String query = "SELECT *, ( 3959 * acos( cos( radians(?) ) * "
+			 		+ "cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) *"
+			 		+ " sin( radians( lat ) ) ) ) AS distance FROM events having distance < ? ORDER BY distance LIMIT 0 , 20;";
+
+				      // create the mysql insert preparedstatement
+			 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
+				      preparedStmt.setString (1, lat);
+				      preparedStmt.setString (2, lng);
+				      preparedStmt.setString (3, lat);
+				      preparedStmt.setString (4, radius);
+				      
+			
+				      
+				    rs = preparedStmt.executeQuery();
+				    
+				    return rs;
 				     
 				      
 			}
@@ -99,9 +137,6 @@ public class Events
 			{
 				System.out.println(e.toString());
 			}
-				     
-			
-			
-	}
-
+			return rs;
+		}
 }
