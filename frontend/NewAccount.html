@@ -17,6 +17,7 @@
     <title>Voluntold</title>
 
     <script>
+    $.support.cors = true;
         function createAccount() {
                 var username = document.getElementById('username').value;
                 var email= document.getElementById('Email').value;
@@ -24,19 +25,36 @@
                 var password = document.getElementById('password').value;
                 var confirmPassword = document.getElementById('Confirmpassword').value;
                 if (password === confirmPassword) {
-                  var validate =
-                    "http://localhost:4567/makeuser/" + username + "/" + password + "/" + email + "/" + phoneNumber;
+                  var validate = "http://localhost:4567/makeuser";
+                  var data = JSON.stringify(
+                  	{
+                  		"username" : username,
+                  		"password": password,
+                    	"phone": phoneNumber,
+                    	"email": email
+                  	}
+                  );
+
+                  
                   $.ajax({
-                    type: "GET",
-                    url: validate,
-                  }).then(function(data) {
-                    console.log(data);
-                  });  
+                    type: "POST",
+                    url: validate, 
+                    contentType: "application/json",
+					dataType: "json",
+                    data: data, 
+                    
+                    success: function(data) {
+                    	alert("true");
+                    }
+                    
+                  }); 
+                   
                 } else {
-                  alert("Passwords do not match")
+                  	alert("Passwords do not match");
                 }
-                
         }
+
+
     </script>
 
     </head>
@@ -94,12 +112,12 @@
         <div class="col-xs-4"></div>
     </div>
         <div align="center">
-<input type="submit" value="Submit" >
+<button onclick="createAccount()" id="submit" class="btn btn-default btn-block" type="submit" >Submit</button>
         </div> 
     </form>
     </div>
 
-
+<!--
     <script type="text/javascript">
     //Initialize the Amazon Cognito credentials provider
     AWS.config.region = 'us-east-1'; // Region
@@ -111,4 +129,5 @@
        });
     });
     </script>
+    -->
     </html>
