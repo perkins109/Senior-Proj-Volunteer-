@@ -12,9 +12,7 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
-    
-    <!-- GOOGLE MAPS -->
-    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+      
 		
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
@@ -110,62 +108,89 @@
         <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-2">
-        <div class="form-group">
-  <label for="ZipCode">Enter Zip Code:</label>
-  <input type="text" class="form-control" id="Zip">
-</div>
+            <div class="form-group">
+  
+  <input type="text" class="form-control" id="Zip" placeholder="Enter Address">
             </div>
-             <div class="col-md-2" style="text-align:center;">
-                 <div class="form-group"></div>
-                  <label for="ZipCode">Miles from Zip</label>
+            </div>
+         <div class="col-md-1" style="text-align:center;">
+            
             <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Miles from Zip
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-        <li>5</li>
-      <li>10</li>
-      <li>15</li>
-      <li>20</li>
-      <li>25+</li>
-  </ul>
-</div>
-            </div> </div>
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="caret"></span> Miles from Address
+                </button>
+                <ul class="dropdown-menu" id="Radius_Search">
+                  <li>5</li>
+                  <li>10</li>
+                  <li>15</li>
+                  <li>20</li>
+                  <li>25+</li>
+                </ul>
+             </div>
+         </div> 
+            <div class="col-md-1">
+					<button class="btn btn-default btn-block" onclick="convertAddress()" id="search" type="submit"> <span class="glyphicon glyphicon-search"></span> Search</button>
+				</div>
+
             <div class="col-md-4"></div>
             </div>
         <div class="row" style="height:400px;">
             <div class="col-md-4"></div>
-        <div class="col-md-4" id="map" style="height:400px;"></div>
-        <div class="col-md-4"></div>
-            </div>
+            <div class="col-md-4" id="map" style="height:400px;"></div>
+            <div class="col-md-4"></div>
+        </div>
+        <script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('search').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('Zip').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+            alert(results.object);
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+               
+            });
+              
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
         
-		   <script>
-function myMap() {
-  var mapCanvas = document.getElementById("map");
-  var mapCenter = new google.maps.LatLng(39.7099, -75.1189);
-  var mapOptions = {center: mapCenter, zoom: 15};
-  var map = new google.maps.Map(mapCanvas, mapOptions);    
-  var marker = new google.maps.Marker({position: mapCenter});
+              console.log(results[0].geometry.location.lat());
+            console.log(results[0].geometry.location.lng())
+        });
+      }
+    </script>
+        
+     <script   
+           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
+    </script>
+      <script>    
+          
+function convertAddress() {
+        var str = document.getElementById("Zip").value;
+        var loc = str.split(' ').join('+');
+        
+        https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
 
-    marker.setMap(map);
-    
-    var searchRadius = new google.maps.Circle({
-  center:mapCenter,
-  radius:500,
-  strokeColor:"#0000FF",
-  strokeOpacity:0.8,
-  strokeWeight:2,
-  fillColor:"#0000FF",
-  fillOpacity:0.4
-});
-    searchRadius.setMap(map);
-    
-    var infowindow = new google.maps.InfoWindow({
-  content:"This is where all your money has gone"
-  });
-
-infowindow.open(map,marker);
+        console.log(loc);
 }
-</script>
+
+</script> 
+        -->
+        
         <hr class="divider">
         
         <h3>Search Results</h3>
@@ -173,11 +198,9 @@ infowindow.open(map,marker);
 			<a style="color:black;">All events within x miles go here</a> 
 			<!-- Insert loop function here that will display all events that have been created by this user -->
 		</div>
-        <!-- GOOGLE MAPS -->
-    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        
 		
-	</div>
-    
+    </div>
  
 </body>
 </html>
