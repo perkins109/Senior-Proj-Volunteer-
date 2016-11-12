@@ -1,259 +1,288 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-	<!-- Latest compiled and minified CSS -->
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-	</script>
-	
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+
+
     </script>
-      
-		
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	
-	<style>
-	       
-	       .navbar-default .navbar-nav > li > a{
-	           color: red;
-	           border-color: red;
-	           font-size: 1.8em;
-	       }
-	       
-	       
-	       .navbar-default {
-	           border-color: red;
-	           background-color: white;
-	       }
-	       
-	       .well {
-	           background-color: rgb(250,200,200);
-	           border-color: red;            
-	       }
-	       
-	       .divider {
-	 		   height: 2px;
-			   background-color: black;
-			   width:100%;
-	 		   display:block;
-	 		   overflow: hidden;
-     	    }
-        
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+
+
+    </script>
+
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <style>
+        .navbar-default .navbar-nav > li > a {
+            color: red;
+            border-color: red;
+            font-size: 1.8em;
+        }
+        .navbar-default {
+            border-color: red;
+            background-color: white;
+        }
+        .well {
+            background-color: rgb(250, 200, 200);
+            border-color: red;
+        }
+        .divider {
+            height: 2px;
+            background-color: black;
+            width: 100%;
+            display: block;
+            overflow: hidden;
+        }
         .dropdown > dropdown-menu > li {
             align-content: center;
             color: red;
-        
         }
-	   .v-divider{
- margin-left:5px;
- margin-right:5px;
- width:1px;
- height:100%;
- border-left:1px solid gray;
-           
-}    
-	}
-	</style>
-	
-	<title>Voluntold</title>
-	
+        .v-divider {
+            margin-left: 5px;
+            margin-right: 5px;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid gray;
+        }
+    }
+
+    </style>
+
+    <title>Voluntold</title>
+
 </head>
-    
+
 nj11275530402
 
-    <body>
-	<div class="container-fluid">
-		<div class="page-header">
+<body>
+    <div class="container-fluid">
+        <div class="page-header">
 
-			<h1><img height="100" src="Voluntold.PNG" width="250">
+            <h1><img height="100" src="Voluntold.PNG" width="250">
 			</h1>
 
-			<p>The Volunteer Networking Page</p>
-		</div>
-
-
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="#">Home</a>
-					</li>
-
-
-					<li>
-						<a href="#">Create Event</a>
-					</li>
-
-
-					<li>
-						<a href="#">Your Events</a>
-					</li>
-
-
-					<li>
-						<a href="#">Settings</a>
-					</li>
-				</ul>
-
-
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a>
-					</li>
-
-
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-                <div class="row" >
-        
-        <div class="col-md-3">
-            <div class="form-group">
-  
-  <input type="text" style="height: 75px" class="form-control" id="Zip" placeholder="Enter Description">
-            </div>
-            </div>
-        
-            <div class="col-md-1" style="border-right: 1px solid gray">
-                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Desc_search"  type="submit"> <span class="glyphicon glyphicon-search"> Search by Name</span></button>
-                    </div>
-        
-        <div class="col-md-2">
-            <div class="form-group">
-  
-  <input type="text" style="height: 75px" class="form-control" id="Zip" placeholder="Enter Address">
-            </div>
-            </div>
-         <div class="col-md-1" style="text-align:center;">
-            
-            <div class="form-group" style="height: 75px">
-                    <label for="sel1">Miles from Address</label>
-  <select class="form-control" id="Radius_Search">
-    <option>5</option>
-    <option>10</option>
-    <option>20</option>
-    <option>20+</option>
-  </select>
-</div>
-         </div> 
-            <div class="col-md-1" style="border-right: 1px solid gray">
-                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Address_search"  type="submit"> <span class="glyphicon glyphicon-search"> Search by Address</span></button>
-				</div>
-
-<div class="col-md-3">
-						<input class="form-control" id="date" type="date" min="2016-11-01" placeholder="Date">
-					</div>            
-        <div class="col-md-1">
-                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Date_search"  type="submit"> <span class="glyphicon glyphicon-search"> Search by Date</span></button>
-                    </div>
+            <p>The Volunteer Networking Page</p>
         </div>
-        
+
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Create Event</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Your Events</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#">Settings</a>
+                    </li>
+                </ul>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" style="height: 75px" class="form-control" id="Desc" placeholder="Enter Description">
+          
+            </div>
+            
+            <div class="col-md-1" style="border-right: 1px solid gray">
+                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Desc_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Name</span>
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+
+                    <input type="text" style="height: 75px" class="form-control" id="Zip" placeholder="Enter Address">
+                </div>
+            </div>
+            
+            <div class="col-md-1" style="text-align:center;">
+                <div class="form-group" style="height: 75px">
+                    <label for="sel1">Miles from Address</label>
+                    <select class="form-control" id="Radius_Search">
+                        <option>5</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>20+</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-md-1" style="border-right: 1px solid gray">
+                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Address_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Address</span>
+                </button>
+            </div>
+
+            <div class="col-md-3">
+                <input class="form-control" style="height: 75px" id="Date" type="date" min="2016-11-01" placeholder="Date">
+            </div>
+            
+            <div class="col-md-1">
+                <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Date_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Date</span>
+                </button>
+            </div>
+            
+        </div>
+
         <div class="row" id="Map_div" style="height:400px;">
             <div class="col-md-4"></div>
             <div class="col-md-4" id="map" style="height:400px;"></div>
             <div class="col-md-4"></div>
         </div>
-        
-        <script>
-        var min = new Date();
-var day = min.getDate();
-var month = min.getMonth()+1;
-var year = min.getFullYear();
- if(day<10){
-        day='0'+day
-    } 
-    if(month<10){
-        month='0'+month
-    } 
 
-min = year+'-'+month+'-'+day;
-document.getElementById("date").setAttribute("min", min)
+        <script>
+            var min = new Date();
+            var day = min.getDate();
+            var month = min.getMonth() + 1;
+            var year = min.getFullYear();
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month < 10) {
+                month = '0' + month
+            }
+
+            min = year0 + '-' + month + '-' + day;
+            document.getElementById("date").setAttribute("min", min)
+        </script>
+
+        <script>
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 8,
+                    center: {
+                        lat: -34.397,
+                        lng: 150.644
+                    }
+                });
+                var geocoder = new google.maps.Geocoder();
+
+                document.getElementById('search').addEventListener('click', function() {
+                    geocodeAddress(geocoder, map);
+                });
+            }
+
+            function geocodeAddress(geocoder, resultsMap) {
+                var address = document.getElementById('Zip').value;
+                geocoder.geocode({
+                    'address': address
+                }, function(results, status) {
+
+                    if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location
+                        });
+
+
+                        var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
+
+                        var circle = new google.maps.Circle({
+                            map: resultsMap,
+                            center: results[0].geometry.location,
+                            radius: Meter_radius
+                        });
+
+                        /*
+                        TO DO!! 
+             
+                        Set zoom on results map
+                        */
+
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+
+                    AddressSearch(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                });
+            }
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
         </script>
         
         <script>
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 8,
-          center: {lat: -34.397, lng: 150.644}
-        });
-        var geocoder = new google.maps.Geocoder();
-
-        document.getElementById('search').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
-        });
-      }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('Zip').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-           
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-             
-              
-              var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
-              
-            var circle = new google.maps.Circle({
-                map: resultsMap,
-                center: results[0].geometry.location,
-                radius: Meter_radius
-            });
-              
-             /*
-             TO DO!! 
-             
-             Set zoom on results map
-             */
-              
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        
-            AddressSearch(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-        });
-      }
-    </script>
-        
-     <script   
-           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
-    </script>
-      <script>    
-    
-        function AddressSearch(lat, long) {
-                
+            function AddressSearch(lat, long) {
                 var validate = "http://localhost:4567/events/search/location/" + document.getElementById("Radius_Search").value + "/" + lat + "/" + long;
-                  console.log(validate);
+                console.log(validate);
                 $.ajax({
                     type: "GET",
                     url: validate,
                 }).then(function(data) {
-                   // window.location="main.HTML";
+                    // window.location="main.HTML";
                 });
-        }
-    </script>
+            }
+            
+            function NameSearch(){
+                var validate = "/events/search/name/" + document.getElementById("Desc").value;
+                console.log(validate);
+                $.ajax({
+                    type: "GET",
+                    url: validate,
+                }).then(function(data) {
+                    // window.location="main.HTML";
+                });
+            }
+            
+            function DateSearch(){
+                var validate = "/events/search/date/" + document.getElementById("Date").value;
+                console.log(validate);
+                $.ajax({
+                    type: "GET",
+                    url: validate,
+                }).then(function(data) {
+                    // window.location="main.HTML";
+                });
+            }
+        </script>
+        
 
         <hr class="divider">
-        
+
         <h3>Search Results</h3>
         <div class="well">
-			<a style="color:black;">All events within x miles go here</a> 
-			<!-- Insert loop function here that will display all events that have been created by this user -->
-		</div>
-        
-		
+            <a style="color:black;">All events within x miles go here</a>
+            <!-- Insert loop function here that will display all events that have been created by this user -->
+        </div>
+
+
     </div>
- 
+
 </body>
+
 </html>
