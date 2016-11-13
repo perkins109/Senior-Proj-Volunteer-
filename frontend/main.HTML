@@ -18,113 +18,179 @@
 
     </script>
 
- <script src="jquery-3.1.1.js"></script>
-    
-        <script>
-            function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 8,
-                    center: {
-                        lat: -34.397,
-                        lng: 150.644
-                    }
-                });
-                var geocoder = new google.maps.Geocoder();
+    <script src="jquery-3.1.1.js"></script>
+    <Script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {
+                    lat: 39.71,
+                    lng: -75.12
+                }
+            });
+            var geocoder = new google.maps.Geocoder();
 
-                document.getElementById('Address_search').addEventListener('click', function() {
-                    geocodeAddress(geocoder, map);
-                });
-                document.getElementById('Name_search').addEventListener('click', function() {
-                    NameSearch();
-                });
-                document.getElementById('Date_search').addEventListener('click', function() {
-                    DateSearch();
-                });
-            }
+            document.getElementById('Address_search').addEventListener('click', function() {
+                console.log("Add");
+                geocodeAddress(geocoder, map);
+            });
+            document.getElementById('Name_search').addEventListener('click', function() {
+                console.log("Nam");
+                NameSearch();
+            });
+            document.getElementById('Date_search').addEventListener('click', function() {
+                console.log("Date");
+                DateSearch();
+            });
+        }
 
-            function geocodeAddress(geocoder, resultsMap) {
-                var address = document.getElementById('Zip').value;
-                geocoder.geocode({
-                    'address': address
-                }, function(results, status) {
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('Zip').value;
+            geocoder.geocode({
+                'address': address
+            }, function(results, status) {
 
-                    if (status === 'OK') {
-                        resultsMap.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: resultsMap,
-                            position: results[0].geometry.location
-                        });
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
 
 
-                        var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
+                    var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
 
-                        var circle = new google.maps.Circle({
-                            map: resultsMap,
-                            center: results[0].geometry.location,
-                            radius: Meter_radius
-                        });
+                    var circle = new google.maps.Circle({
+                        map: resultsMap,
+                        center: results[0].geometry.location,
+                        radius: Meter_radius
+                    });
 
-                        /*
+                    /*
                         TO DO!! 
              
                         Set zoom on results map
                         */
 
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+
+                AddressSearch(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            });
+        }
+
+
+
+
+        function NameSearch() {
+            var validate = "http://localhost:4567/events/search/name/" + document.getElementById("Desc").value;
+            console.log(validate);
+            $.support.cors = true;
+            $.ajax({
+                type: "GET",
+                url: validate,
+                complete: function(data) {
+                    var obj = JSON.parse(data.responseText);
+
+                    clearResults();
+
+
+                    for (x = 0; x < obj.events.length; x++) {
+
+                        $("#Name" + x).append(obj.events[x].name);
+                        $("#Date" + x).append(obj.events[x].date + " ");
+                        $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
+                        $("#Desc" + x).append(obj.events[x].description);
                     }
 
-                    AddressSearch(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-                });
-            }
-        </script>
+                }
+            });
+        }
 
+
+
+
+        function DateSearch() {
+            var validate = "http://localhost:4567/events/search/date/" + document.getElementById("Date").value;
+            console.log(validate);
+            $.support.cors = true;
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:4567/events/search/date/" + document.getElementById("Date").value,
+                complete: function(data) {
+                    var obj = JSON.parse(data.responseText);
+
+                    clearResults();
+
+                    for (x = 0; x < obj.events.length; x++) {
+
+                        $("#Name" + x).append(obj.events[x].name);
+                        $("#Date" + x).append(obj.events[x].date + " ");
+                        $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
+                        $("#Desc" + x).append(obj.events[x].description);
+                    }
+
+                }
+            });
+        }
+
+
+
+        function AddressSearch(lat, long) {
+            var validate = "http://localhost:4567/events/search/location/" + document.getElementById("Radius_Search").value + "/" + lat + "/" + long;
+            console.log(validate);
+            $.support.cors = true;
+            $.ajax({
+                type: "GET",
+                url: validate,
+                complete: function(data) {
+                    obj = JSON.parse(data.responseText);
+
+                    clearResults();
+
+                    for (x = 0; x < obj.events.length; x++) {
+
+                        $("#Name" + x).append(obj.events[x].name);
+                        $("#Date" + x).append(obj.events[x].date + " ");
+                        $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
+                        $("#Desc" + x).append(obj.events[x].description);
+                    }
+
+
+                }
+            });
+        }
         
-        
-        <script>
-            function AddressSearch(lat, long) {
-                var validate = "http://localhost:4567/events/search/location/" + document.getElementById("Radius_Search").value + "/" + lat + "/" + long;
-                console.log(validate);
-                $.ajax({
-                    type: "GET",
-                    url: validate,
-                    }).then(function(data) {
-                    //$('.greeting-id').append(data.events.id);
-                    //$('.greeting-name').append(data.events.name);
-                    
-                    console.log(data.events.id);
-    });
-            }
-            
-            function NameSearch(){
-                var validate = "http://localhost:4567/events/search/name/" + document.getElementById("Desc").value;
-                console.log(validate);
-                $.ajax({
-                    type: "GET",
-                    url: validate,
-                }).then(function(data) {
-                    //$('.greeting-id').append(data.events.id);
-                    //$('.greeting-name').append(data.events.name);
-                    
-                    console.log(data.events.id);
-    });
-            }
-            
-            function DateSearch(){
-                var validate = "http://localhost:4567/events/search/date/" + document.getElementById("Date").value;
-                console.log(validate);
-                $.ajax({
-                    type: "GET",
-                    url: validate,
-               }).then(function(data) {
-                    //$('.greeting-id').append(data.events.id);
-                    //$('.greeting-name').append(data.events.name);
-                    
-                    console.log(data.events.id);
-    });
-            }
-        </script>
-        
+        function clearResults() {
+
+            document.getElementById("Name0").innerHTML = "Event Name: ";
+            document.getElementById("Name1").innerHTML = "Event Name: ";
+            document.getElementById("Name2").innerHTML = "Event Name: ";
+            document.getElementById("Date0").innerHTML = "Event Date/Time: ";
+            document.getElementById("Date1").innerHTML = "Event Date/Time: ";
+            document.getElementById("Date2").innerHTML = "Event Date/Time: ";
+            document.getElementById("Desc0").innerHTML = "Event Description: ";
+            document.getElementById("Desc1").innerHTML = "Event Description: ";
+            document.getElementById("Desc2").innerHTML = "Event Description: ";
+
+        }
+        var min = new Date();
+        var day = min.getDate();
+        var month = min.getMonth() + 1;
+        var year = min.getFullYear();
+        if (day < 10) {
+            day = '0' + day
+        }
+        if (month < 10) {
+            month = '0' + month
+        }
+
+        min = year + '-' + month + '-' + day;
+        document.getElementById("Date").setAttribute("min", min);
+
+
+    </Script>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -199,9 +265,7 @@ nj11275530402
                     </li>
 
 
-                    <li>
-                        <a href="#">Settings</a>
-                    </li>
+
                 </ul>
 
 
@@ -221,9 +285,9 @@ nj11275530402
         <div class="row">
             <div class="col-md-3">
                 <input type="text" style="height: 75px" class="form-control" id="Desc" placeholder="Enter Description">
-          
+
             </div>
-            
+
             <div class="col-md-1" style="border-right: 1px solid gray">
                 <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Name_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Name</span>
                 </button>
@@ -235,7 +299,7 @@ nj11275530402
                     <input type="text" style="height: 75px" class="form-control" id="Zip" placeholder="Enter Address">
                 </div>
             </div>
-            
+
             <div class="col-md-1" style="text-align:center;">
                 <div class="form-group" style="height: 75px">
                     <label for="sel1">Miles from Address</label>
@@ -247,7 +311,7 @@ nj11275530402
                     </select>
                 </div>
             </div>
-            
+
             <div class="col-md-1" style="border-right: 1px solid gray">
                 <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Address_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Address</span>
                 </button>
@@ -256,12 +320,11 @@ nj11275530402
             <div class="col-md-3">
                 <input class="form-control" style="height: 75px" id="Date" type="date" min="2016-11-01" placeholder="Date">
             </div>
-            
+
             <div class="col-md-1">
                 <button class="btn btn-default btn-block" style="height: 75px; white-space: normal" id="Date_search" type="submit"> <span class="glyphicon glyphicon-search"> Search by Date</span>
                 </button>
             </div>
-            
         </div>
 
         <div class="row" id="Map_div" style="height:400px;">
@@ -270,36 +333,38 @@ nj11275530402
             <div class="col-md-4"></div>
         </div>
 
-        
-
         <hr class="divider">
 
         <h3>Search Results</h3>
+
         <div class="well">
-            <a style="color:black;">All events within x miles go here</a>
-            <!-- Insert loop function here that will display all events that have been created by this user -->
+
+            <p style="color: black" id="Name0">Event Name: </p>
+            <p style="color: black" id="Date0">Event Date/Time: </p>
+            <p style="color: black" id="Desc0">Event Description: </p>
+
+            <li class="divider"></li>
+
+            <p style="color: black" id="Name1">Event Name: </p>
+            <p style="color: black" id="Date1">Event Date/Time:
+                <p>
+                    <p style="color: black" id="Desc1">Event Description: </p>
+
+                    <li class="divider"></li>
+
+                    <p style="color: black" id="Name2">Event Name: </p>
+                    <p style="color: black" id="Date2">Event Date/Time: </p>
+                    <p style="color: black" id="Desc2">Event Description: </p>
+
+
         </div>
 
 
     </div>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
-        </script>
-    <script>
-            var min = new Date();   
-            var day = min.getDate();
-            var month = min.getMonth() + 1;
-            var year = min.getFullYear();
-            if (day < 10) {
-                day = '0' + day
-            }
-            if (month < 10) {
-                month = '0' + month
-            }
 
-            min = year + '-' + month + '-' + day;
-            document.getElementById("Date").setAttribute("min", min);
-        </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
+    </script>
+
 
 
 </body>
