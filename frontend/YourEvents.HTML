@@ -1,194 +1,220 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-	<!-- Latest compiled and minified CSS -->
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-	</script>
-	
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+
+
     </script>
-		
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	
-	<style>
-	       
-	       .navbar-default .navbar-nav > li > a{
-	           color: red;
-	           border-color: red;
-	           font-size: 1.8em;
-	       }
-	       
-	       
-	       .navbar-default {
-	           border-color: red;
-	           background-color: white;
-	       }
-	       
-	       .well {
-	           background-color: darkgrey;
-	           border-color: black;            
-	       }
-	       
-        
-	       .divider {
-	 		   height: 2px;
-			   background-color: black;
-			   width:100%;
-	 		   display:block;
-	 		   overflow: hidden;
-     	    }
-	       
-	}
-	</style>
-	
-	<title>Voluntold</title>
 
-	<script>
-		function getUserEventsAttended() {
-			// variable for username
-			var validate = "http://localhost:4567/userevents/eventsattended/"; // + variable for username
-            $.ajax({
-            	type: "GET",
-                url: validate,
-            }).then(function(data) {
-                // format to show events attned 
-            });
-		}
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
 
-		function getUserCreatedEvents() {
-			// variable for username
-			var validate = "http://localhost:4567/userevents/eventscreated/"; // + variable for username
-            $.ajax({
-            	type: "GET",
-                url: validate,
-            }).then(function(data) {
-                // format to show events attned 
-            });
-		}
 
-		function getEventsAttended(){
-			//variable for user
-			//variable for eventid
-			var validate = "http://localhost:4567/users/attend"; // + variable for username + "/" + variable for eventid
+    </script>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <style>
+        .navbar-default .navbar-nav > li > a {
+            color: red;
+            border-color: red;
+            font-size: 1.8em;
+        }
+        .navbar-default {
+            border-color: red;
+            background-color: white;
+        }
+        .well {
+            background-color: darkgrey;
+            border-color: black;
+        }
+        .divider {
+            height: 2px;
+            background-color: black;
+            width: 100%;
+            display: block;
+            overflow: hidden;
+        }
+    }
+
+    </style>
+
+    <title>Voluntold</title>
+
+    <script>
+        function getUserEventsAttended() {
+            // variable for username
+
+            var validate = "http://localhost:4567/userevents/eventsattended/admin";
+            $.support.cors = true;
             $.ajax({
-            	type: "GET",
+                type: "GET",
                 url: validate,
-            }).then(function(data) {
-                // format to show events attned 
+                complete: function(data) {
+                    obj = JSON.parse(data.responseText);
+
+
+                    for (x = 0; x < obj.events.length; x++) {
+
+                        $("#AttName" + x).append(obj.events[x].name);
+                        $("#AttDate" + x).append(obj.events[x].date + " ");
+                        $("#AttDate" + x).append(obj.events[x].time.split(" ")[1]);
+                        $("#AttDesc" + x).append(obj.events[x].description);
+                    }
+
+
+                }
             });
-		}
-	</script>
-	
+        }
+
+        function getUserCreatedEvents() {
+            // variable for username
+            var validate = "http://localhost:4567/userevents/eventscreated/admin";
+            $.support.cors = true;
+            $.ajax({
+                type: "GET",
+                url: validate,
+                complete: function(data) {
+                    obj = JSON.parse(data.responseText);
+
+
+                    for (x = 0; x < obj.events.length; x++) {
+
+                        $("#CreName" + x).append(obj.events[x].name);
+                        $("#CreDate" + x).append(obj.events[x].date + " ");
+                        $("#CreDate" + x).append(obj.events[x].time.split(" ")[1]);
+                        $("#CreDesc" + x).append(obj.events[x].description);
+                    }
+
+
+                }
+            });
+        }
+
+    </script>
+
 </head>
 
-<body>
-	<div class="container-fluid">
-		<div class="page-header">
-			
-			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
-			<h1><img height="100" src="C:/Users/GIANLUCA/OneDrive/School/Senior%20Proj/Voluntold.PNG" width="250">
+<body onload="getUserCreatedEvents(); getUserEventsAttended();">
+    <div class="container-fluid">
+        <div class="page-header">
+
+            <!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+            <h1><img height="100" src="Voluntold.PNG" width="250">
 			</h1>
 
 
-			<p>The Volunteer Networking Page</p>
-		</div>
-
-
-		<nav class="navbar navbar-default">
-			<div class="container-fluid">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="#">Home</a>
-					</li>
-
-
-					<li>
-						<a href="#">Create Event</a>
-					</li>
-
-
-					<li>
-						<a href="#">Your Events</a>
-					</li>
-
-
-					<li>
-						<a href="#">Settings</a>
-					</li>
-				</ul>
-
-
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-user"></span> Profile Name</a>
-					</li>
-
-
-					<li>
-						<a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-
-
-		<div>
-			<h3>Your Created Events</h3>
-		</div>
-
-		<hr class="divider">
-
-
-		<div class="well">
-			<a style="color:black;">All created events will go here</a> 
-			<!-- Insert loop function here that will display all events that have been created by this user -->
-		
-
-        
-        <div class="well" style="background-color: white">
-            <!-- IF STATEMENT TO CHECK WHETHER EVENTS JSON OBJECT IS NULL-->
-            <!-- START FOR LOOP-->
-            
-            <div><a style="color:black;" id ="event_name">Event Name</a></div>
-            <div><a style="color:black;" id = "event_date">Event Date</a></div>
-            <div><a style="color:black;" id = "event_time">Event Time</a></div>
-            <div><a style="color:black;" id = "event_description">Event Description</a></div>
-        </div>
-                
-            
-            <!-- END FOR LOOP -->
-          
-            
+            <p>The Volunteer Networking Page</p>
         </div>
 
-		<div>
-			<h3>Your Attended Events</h3>
-		</div>
 
-		<hr class="divider divider-custom">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
 
 
-		<div class="well">
-			<a style="color:black;">All attended events will go here</a> 
-			<!-- Insert loop function here that will display all events that have been created by this user -->
+                    <li>
+                        <a href="#">Create Event</a>
+                    </li>
 
-			 <div class="well" style="background-color: white">
-            <!-- IF STATEMENT TO CHECK WHETHER EVENTS JSON OBJECT IS NULL-->
-            <!-- START FOR LOOP-->
-            
-            <div><a style="color:black;" id ="event_atteneded_name">Event Name</a></div>
-            <div><a style="color:black;" id = "event_atteneded_date">Event Date</a></div>
-            <div><a style="color:black;" id = "event_atteneded_time">Event Time</a></div>
-            <div><a style="color:black;" id = "event_atteneded_description">Event Description</a></div>
+
+                    <li>
+                        <a href="#">Your Events</a>
+                    </li>
+
+                </ul>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-user"></span> Profile Name</a>
+                    </li>
+
+
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div>
+            <h3>Your Created Events</h3>
         </div>
 
-		</div>
-	</div>
+        <hr class="divider">
+
+
+        <div class="well">
+
+            <div class="well" style="background-color: white">
+                <p style="color: black" id="CreName0">Event Name: </p>
+                <p style="color: black" id="CreDate0">Event Date/Time: </p>
+                <p style="color: black" id="CreDesc0">Event Description: </p>
+
+                <li class="divider"></li>
+
+                <p style="color: black" id="CreName1">Event Name: </p>
+                <p style="color: black" id="CreDate1">Event Date/Time:
+                    <p>
+                        <p style="color: black" id="CreDesc1">Event Description: </p>
+
+                        <li class="divider"></li>
+
+                        <p style="color: black" id="CreName2">Event Name: </p>
+                        <p style="color: black" id="CreDate2">Event Date/Time: </p>
+                        <p style="color: black" id="CreDesc2">Event Description: </p>
+
+            </div>
+
+
+
+        </div>
+
+        <div>
+            <h3>Your Attended Events</h3>
+        </div>
+
+        <hr class="divider divider-custom">
+
+
+        <div class="well">
+            <a style="color:black;">All attended events will go here</a>
+            <!-- Insert loop function here that will display all events that have been created by this user -->
+
+            <div class="well" style="background-color: white">
+                <p style="color: black" id="AttName0">Event Name: </p>
+                <p style="color: black" id="AttDate0">Event Date/Time: </p>
+                <p style="color: black" id="AttDesc0">Event Description: </p>
+
+                <li class="divider"></li>
+
+                <p style="color: black" id="AttName1">Event Name: </p>
+                <p style="color: black" id="AttDate1">Event Date/Time:
+                    <p>
+                        <p style="color: black" id="AttDesc1">Event Description: </p>
+
+                        <li class="divider"></li>
+
+                        <p style="color: black" id="AttName2">Event Name: </p>
+                        <p style="color: black" id="AttDate2">Event Date/Time: </p>
+                        <p style="color: black" id="AttDesc2">Event Description: </p>
+
+            </div>
+
+        </div>
+    </div>
 </body>
+
 </html>
