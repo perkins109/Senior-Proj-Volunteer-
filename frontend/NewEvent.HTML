@@ -43,6 +43,38 @@
 	</style>
 
 	<title>Voluntold</title>
+
+	<script>
+    $.support.cors = true;
+        function createEvent() {
+                var evenet_name = document.getElementById('event_name').value;
+                var description = document.getElementById('description').value;
+                var event_location = document.getElementById('event_location').value;
+                var date = document.getElementById('date').value;
+                var validate = "http://localhost:4567/add/event";
+                var data = JSON.stringify(
+                	{
+                  		"name" : event_name,
+                  		"description": description,
+                    	"date": date,
+                  	}
+                );
+                $.ajax({
+            	    type: "POST",
+                    url: validate, 
+                    contentType: "application/json",
+					dataType: "json",
+                    data: data, 
+                    success: function(data) {
+                    	alert("true");
+                    }
+                    
+                }); 
+                   
+        } 
+
+
+    </script>
 </head>
 
 <body>
@@ -114,7 +146,7 @@
 				<div class="form-group row">
                     <div class="col-xs-4"></div>
 					<div class="col-xs-4">
-						<input class="form-control" id="Event Name" type="text" placeholder="Event Name">
+						<input class="form-control" id="event_name" type="text" placeholder="Event Name">
 					</div>
 
 
@@ -140,7 +172,7 @@
 					</div>
 
 					<div class="col-xs-4">
-						<input class="form-control" id="Event Location" type="text" placeholder="Event Location">
+						<input class="form-control" id="event_location" type="text" placeholder="Event Location">
 					</div>
 					<div class="col-xs-4">
 					</div>
@@ -161,7 +193,7 @@
 
 
 				<div align="center">
-					<input type="submit" value="Submit">
+					<input onclick= "createEvent()" type="submit" value="Submit">
 				</div>
 			</form>
 		</div>
