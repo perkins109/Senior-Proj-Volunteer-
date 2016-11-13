@@ -48,6 +48,42 @@
 	</style>
 	
 	<title>Voluntold</title>
+
+	<script>
+		function getUserEventsAttended() {
+			// variable for username
+			var validate = "http://localhost:4567/userevents/eventsattended/"; // + variable for username
+            $.ajax({
+            	type: "GET",
+                url: validate,
+            }).then(function(data) {
+                // format to show events attned 
+            });
+		}
+
+		function getUserCreatedEvents() {
+			// variable for username
+			var validate = "http://localhost:4567/userevents/eventscreated/"; // + variable for username
+            $.ajax({
+            	type: "GET",
+                url: validate,
+            }).then(function(data) {
+                // format to show events attned 
+            });
+		}
+
+		function getEventsAttended(){
+			//variable for user
+			//variable for eventid
+			var validate = "http://localhost:4567/users/attend"; // + variable for username + "/" + variable for eventid
+            $.ajax({
+            	type: "GET",
+                url: validate,
+            }).then(function(data) {
+                // format to show events attned 
+            });
+		}
+	</script>
 	
 </head>
 
@@ -119,11 +155,11 @@
             <!-- IF STATEMENT TO CHECK WHETHER EVENTS JSON OBJECT IS NULL-->
             <!-- START FOR LOOP-->
             
-            <div><a style="color:black;">Event Name</a></div>
-            <div><a style="color:black;">Event Date/Time</a></div>
-            <div><a style="color:black;">Event Location</a></div>
-            <div><a style="color:black;">Event Description</a></div>
-            </div>
+            <div><a style="color:black;" id ="event_name">Event Name</a></div>
+            <div><a style="color:black;" id = "event_date">Event Date</a></div>
+            <div><a style="color:black;" id = "event_time">Event Time</a></div>
+            <div><a style="color:black;" id = "event_description">Event Description</a></div>
+        </div>
                 
             
             <!-- END FOR LOOP -->
@@ -141,6 +177,17 @@
 		<div class="well">
 			<a style="color:black;">All attended events will go here</a> 
 			<!-- Insert loop function here that will display all events that have been created by this user -->
+
+			 <div class="well" style="background-color: white">
+            <!-- IF STATEMENT TO CHECK WHETHER EVENTS JSON OBJECT IS NULL-->
+            <!-- START FOR LOOP-->
+            
+            <div><a style="color:black;" id ="event_atteneded_name">Event Name</a></div>
+            <div><a style="color:black;" id = "event_atteneded_date">Event Date</a></div>
+            <div><a style="color:black;" id = "event_atteneded_time">Event Time</a></div>
+            <div><a style="color:black;" id = "event_atteneded_description">Event Description</a></div>
+        </div>
+
 		</div>
 	</div>
 </body>
