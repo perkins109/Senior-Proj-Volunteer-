@@ -43,22 +43,80 @@
 	</style>
 
 	<title>Voluntold</title>
+    <script>
+        var geocoder;
+        
+    function initMap() {
+         geocoder = new google.maps.Geocoder();
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {
+                    lat: 39.71,
+                    lng: -75.12
+                }
+            });
+        }
+        
+    </script>
 
 	<script>
-    $.support.cors = true;
-        function createEvent() {
-                var evenet_name = document.getElementById('event_name').value;
+         $.support.cors = true;
+    
+        function creatingEvents() {
+                
+            console.log("Work");
+                
+            
+            
+            var lat;
+                var long;
+                var event_name = document.getElementById('event_name').value;
+                var address = document.getElementById("event_location").value;
+                    
+            geocoder.geocode({
+                'address': address
+            }, function(results, status) {
+                    console.log(status);
+                
+                if (status === 'OK') {
+                    lat = results[0].geometry.location.lat();
+                    long = results[0].geometry.location.lng();
+                    console.log(lat);
+                } else {
+                    console.log('Location entered not valid');
+                }
+
+            }
+            );
+                
                 var description = document.getElementById('description').value;
-                var event_location = document.getElementById('event_location').value;
+               
+                var count = 0;
+                var owner = "admin";
+                var email = "admin@admin.com";
+                var status = true;
+                
+            
                 var date = document.getElementById('date').value;
+                var time = document.getElementById('time').value;
+            
+                
                 var validate = "http://localhost:4567/add/event";
                 var data = JSON.stringify(
                 	{
                   		"name" : event_name,
+                        "status" : status,
                   		"description": description,
                     	"date": date,
+                        "time": time,
+                        "lat" : lat,
+                        "lng" : long,
+                        "attendancecount" : count,
+                        "owner": owner,
+                        "contactemail" : email
                   	}
                 );
+            
                 $.ajax({
             	    type: "POST",
                     url: validate, 
@@ -66,24 +124,23 @@
 					dataType: "json",
                     data: data, 
                     success: function(data) {
-                    	alert("true");
+                    	console.log("Success");
                     }
                     
                 }); 
                    
         } 
-
-
     </script>
 </head>
 
 <body>
+    
 	<div class="container-fluid">
 		<div class="page-header">
 			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
 
-
-			<h1><img height="100" src="C:/Users/GIANLUCA/OneDrive/School/Senior%20Proj/Voluntold.PNG" width="250">
+            <div style="display: none" id="map"></div>
+			<h1><img height="100" src="Voluntold.PNG" width="250">
 			</h1>
 
 
@@ -109,9 +166,7 @@
 					</li>
 
 
-					<li>
-						<a href="#">Settings</a>
-					</li>
+					
 				</ul>
 
 
@@ -184,7 +239,19 @@
 					</div>
 
 					<div class="col-xs-4">
-						<input class="form-control" id="date" type="datetime-local" placeholder="Date and time">
+						<input class="form-control" id="date" placeholder="Date">
+					</div>
+
+					<div class="col-xs-4">
+					</div>
+				</div>
+                
+                <div class="form-group row">
+					<div class="col-xs-4">
+					</div>
+
+					<div class="col-xs-4">
+						<input class="form-control" id="time" placeholder="Time">
 					</div>
 
 					<div class="col-xs-4">
@@ -193,10 +260,13 @@
 
 
 				<div align="center">
-					<input onclick= "createEvent()" type="submit" value="Submit">
+                    <button onclick="creatingEvents()">Submit</button>
 				</div>
 			</form>
 		</div>
 	</div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap"></script>
+    
 </body>
 </html>
