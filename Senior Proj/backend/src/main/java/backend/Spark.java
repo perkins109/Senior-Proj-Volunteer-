@@ -101,7 +101,7 @@ public class Spark
             return "";
 		});
 		
-		//Post an event and save it the the database
+		//edit an event and save it the the database
 		put("/edit/event/:eventID", (request, response) -> {
 					
 			eventpojo = gson.fromJson(request.body(), EventPOJO.class);

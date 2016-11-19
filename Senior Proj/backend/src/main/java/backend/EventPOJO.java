@@ -10,6 +10,7 @@ public class EventPOJO
 				   owner,
 				   contactemail,
 				   lat,
+				   address,
 				   lng;
 
 	
@@ -22,6 +23,14 @@ public class EventPOJO
 	public void setLat(String lat) 
 	{
 		this.lat = lat;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getLng() 

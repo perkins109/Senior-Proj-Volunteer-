@@ -76,7 +76,7 @@ public class Users
 		
 		if(rs.next())
 			id = rs.getString("user_id");
-		ResultSet retVal = users.results("SELECT * FROM events, eventsCreated WHERE eeventsCreated.user_id = '"+ id +"' AND eventsCreated.eventsCreated = events.id");
+		ResultSet retVal = users.results("SELECT * FROM events, eventsCreated WHERE eventsCreated.user_id = '"+ id +"' AND eventsCreated.eventsCreated = events.id");
 		System.out.println("nick");
 
 		

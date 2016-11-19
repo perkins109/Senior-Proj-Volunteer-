@@ -47,8 +47,8 @@ public class Events
 	{
 		try
 		{
-		 String query = "INSERT INTO events ( name, status, description, date, time, owner, contactEmail, lat, lng)"
-			        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		 String query = "INSERT INTO events ( name, status, description, date, time, owner, contactEmail, lat, lng, address)"
+			        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			      // create the mysql insert preparedstatement
 		 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
@@ -61,6 +61,8 @@ public class Events
 			      preparedStmt.setString (7, event.getContactEmail());
 			      preparedStmt.setString (8, event.getLat());
 			      preparedStmt.setString (9, event.getLng());
+			      preparedStmt.setString (10, event.getAddress());
+			      
 		
 			      
 			      preparedStmt.execute();
@@ -83,7 +85,7 @@ public class Events
 			try
 			{
 			 String query = "UPDATE events SET name = ?, description = ?, date = ?, time = ?, "
-			 		+ "contactEmail = ?, lat = ?, lng = ? where id = '" + id + "'";
+			 		+ "contactEmail = ?, lat = ?, lng = ?, address = ? where id = '" + id + "'";
 
 				      // create the mysql insert preparedstatement
 			 		java.sql.PreparedStatement preparedStmt = events.getCon().prepareStatement(query);
@@ -94,6 +96,7 @@ public class Events
 				      preparedStmt.setString (5, event.getContactEmail());
 				      preparedStmt.setString (6, event.getLat());
 				      preparedStmt.setString (7, event.getLng());
+				      preparedStmt.setString (8, event.getAddress());
 			
 				      
 				      preparedStmt.execute();
