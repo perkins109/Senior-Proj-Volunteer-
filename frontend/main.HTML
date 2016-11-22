@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 
 <html lang="en">
 
@@ -42,6 +43,8 @@
                 console.log("Date");
                 DateSearch();
             });
+		
+		
         }
 
         function geocodeAddress(geocoder, resultsMap) {
@@ -56,6 +59,7 @@
                         map: resultsMap,
                         position: results[0].geometry.location
                     });
+			
 
 
                     var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
@@ -102,6 +106,14 @@
                         $("#Date" + x).append(obj.events[x].date + " ");
                         $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
                         $("#Desc" + x).append(obj.events[x].description);
+			    
+			    var latLong = {lat: obj.events[x].lat , lng: obj.events[x].lng}
+			 var marker = new google.maps.Marker({
+				 
+          		position: latLong,
+          		map: document.getElementById("map"),
+         		title: "result " + obj.events[x].name
+        });
                     }
 
                 }
