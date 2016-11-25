@@ -1,4 +1,5 @@
- <!DOCTYPE html>
+
+  <!DOCTYPE html>
 
 <html lang="en">
 
@@ -71,6 +72,8 @@
             });
         }
         function NameSearch() {
+            
+            
             var validate = "http://localhost:4567/events/search/name/" + document.getElementById("Desc").value;
             console.log(validate);
             $.support.cors = true;
@@ -78,6 +81,7 @@
                 type: "GET",
                 url: validate,
                 complete: function(data) {
+                    
                     var markers = [];
                     var obj = JSON.parse(data.responseText);
                     clearResults();
@@ -88,15 +92,27 @@
                         $("#Desc" + x).append(obj.events[x].description);
 			    
 			    var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
-                console.log(latLong);
+             
                         
                 
 			 var marker = new google.maps.Marker({ 
           		position: latLong,
           		map: map,
-         		title: "result " + obj.events[x].name
+         		
         });
-                    marker.setMap(map);
+                    var desc = '<div id="name">' + obj.events[x].name + '</div>' + 
+                                '<div id="date">' + obj.events[x].date + '</div>' + 
+                                '<div id="time">' + obj.events[x].time.split(" ")[1] + '</div>' +
+                                '<div id="desc">' + obj.events[x].description + '</div>' +
+                                '<a href="www.google.com">Attend</a>';
+                    var infowindow = new google.maps.InfoWindow();  
+                        google.maps.event.addListener(marker, 'mouseover', (function(desc) {  
+           return function() {  
+               infowindow.setContent(desc);  
+               infowindow.open(map, this);  
+           }  
+         })(desc));  
+
                     markers.push(marker);
                     }
                     
