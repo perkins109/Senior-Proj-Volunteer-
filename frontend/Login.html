@@ -18,17 +18,18 @@
     <script src="jquery-3.1.1.js"></script>
    
     <script>
-	    //* Validates the users email and user name on login action.
         function login() {
+        	$.support.cors = true;
                 var userEmail = document.getElementById('email').value;
                 var userPwd = document.getElementById('pwd').value;
-		//* Checks the database for username and password
                 var validate = "http://localhost:4567/user/" + userEmail + "/" + userPwd;
                 $.ajax({
                     type: "GET",
-                    url: validate,
-                }).then(function(data) {
-                    window.location="main.HTML";
+                    url: "http://localhost:4567/user/admin/admin",
+                	complete: function(data) {
+						window.location.href = 'main.html';
+					}
+					
                 });
         }
     </script>
@@ -43,7 +44,8 @@
 	<div class="container-fluid">
 		<div class="page-header">
 			
-			<h1><img height="100" src="Voluntold.PNG" width="250">
+			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+			<h1><img height="100" src="Voluntold.png" width="250">
 			</h1>
 
 			<p>The Volunteer Networking Page</p>
@@ -58,8 +60,7 @@
 
 				<div class="col-md-4">
 					<div class="form-group">
-						<!-- Email input -->
-						<label for="email">Email address:</label> <input class="form-control" id="email" type="email">
+						<label for="email">Email address:</label> <input class="form-control" id="email" >
 					</div>
 				</div>
 
@@ -74,7 +75,6 @@
 
 				<div class="col-md-4">
 					<div class="form-group">
-						<!-- Password input -->
 						<label for="pwd">Password:</label> <input class="form-control" id="pwd" type="password">
 					</div>
 				</div>
@@ -91,7 +91,6 @@
 
 
 				<div class="col-md-2">
-					<!-- Login button -->
 					<button onclick="login()" id="submit" class="btn btn-default btn-block" type="submit" >Submit</button>
 				</div>
 
@@ -111,11 +110,12 @@
 				<div class="col-md-5">
 				</div>
 
-
+                <!-- ADD LATER Send to create new user page
 				<div class="col-md-2">
-                    <!-- Send to create new user page -->
+                    
 					<a href="www.Google.com">Forgot Username/Password?</a>
 				</div>
+                -->
 
 
 				<div class="col-md-5">
