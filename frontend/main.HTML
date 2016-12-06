@@ -93,10 +93,13 @@
 	                       '<div id="date">' + obj.events[x].date + '<\/div>' + 
 	                       '<div id="time">' + obj.events[x].time.split(" ")[1] + '<\/div>' +
 	                       '<div id="desc">' + obj.events[x].description + '<\/div>' +
-	                       '<a href="www.google.com">Attend<\/a>';
+	                       '<button onclick=alertMe()>Attend<\/button>';
 	           return desc;
 	       }
 	       
+        function alertMe(){
+            alert("Works");
+        }
 	       function createBounds(markers){
 	           var bounds = new google.maps.LatLngBounds();
 	           for (var i = 0; i < markers.length; i++) {
@@ -123,13 +126,7 @@
 	                   var obj = JSON.parse(data.responseText);
 	                   //clearResults();
 	                   for (x = 0; x < obj.events.length; x++) {
-	                      
-	                       /*$("#Name" + x).append(obj.events[x].name);
-	                       $("#Date" + x).append(obj.events[x].date + " ");
-	                       $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
-	                       $("#Desc" + x).append(obj.events[x].description);
-	               */
-	                       
+	                                      
 	                       var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
 	                       var marker = createMarker(latLong);	            
 	                       var desc = createDesc(obj);	                   
@@ -161,12 +158,6 @@
 	                   //clearResults();
 	                   for (x = 0; x < obj.events.length; x++) {
 	                      
-	                       /*$("#Name" + x).append(obj.events[x].name);
-	                       $("#Date" + x).append(obj.events[x].date + " ");
-	                       $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
-	                       $("#Desc" + x).append(obj.events[x].description);
-	               */
-	                       
 	                       var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
 	                       var marker = createMarker(latLong);	            
 	                       var desc = createDesc(obj);	                   
@@ -198,12 +189,6 @@
 	                   //clearResults();
 	                   for (x = 0; x < obj.events.length; x++) {
 	                      
-	                       /*$("#Name" + x).append(obj.events[x].name);
-	                       $("#Date" + x).append(obj.events[x].date + " ");
-	                       $("#Date" + x).append(obj.events[x].time.split(" ")[1]);
-	                       $("#Desc" + x).append(obj.events[x].description);
-	               */
-	                       
 	                       var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
 	                       var marker = createMarker(latLong);	            
 	                       var desc = createDesc(obj);	                   
@@ -214,19 +199,7 @@
 	                   map.fitBounds(bounds);
 	               }
 	           });
-	       }
-	       
-	       function clearResults() {
-	           document.getElementById("Name0").innerHTML = "Event Name: ";
-	           document.getElementById("Name1").innerHTML = "Event Name: ";
-	           document.getElementById("Name2").innerHTML = "Event Name: ";
-	           document.getElementById("Date0").innerHTML = "Event Date/Time: ";
-	           document.getElementById("Date1").innerHTML = "Event Date/Time: ";
-	           document.getElementById("Date2").innerHTML = "Event Date/Time: ";
-	           document.getElementById("Desc0").innerHTML = "Event Description: ";
-	           document.getElementById("Desc1").innerHTML = "Event Description: ";
-	           document.getElementById("Desc2").innerHTML = "Event Description: ";
-	       }
+           }
 	       
 	</script>
 	<meta charset="utf-8">
@@ -385,56 +358,6 @@
 
 		<hr class="divider">
 
-<!--
-		<h3>Search Results</h3>
-
-
-		<div class="well">
-			<p id="Name0" style="color: black">Event Name:</p>
-
-
-			<p id="Date0" style="color: black">Event Date/Time:</p>
-
-
-			<p id="Desc0" style="color: black">Event Description:</p>
-
-
-			<ul>
-				<li class="divider">
-				</li>
-
-
-				<li style="list-style: none; display: inline">
-					<p id="Name1" style="color: black">Event Name:</p>
-
-
-					<p id="Date1" style="color: black">Event Date/Time:</p>
-
-
-					<p>
-					</p>
-
-
-					<p id="Desc1" style="color: black">Event Description:</p>
-				</li>
-
-
-				<li class="divider">
-				</li>
-
-
-				<li style="list-style: none; display: inline">
-					<p id="Name2" style="color: black">Event Name:</p>
-
-
-					<p id="Date2" style="color: black">Event Date/Time:</p>
-
-
-					<p id="Desc2" style="color: black">Event Description:</p>
-				</li>
-			</ul>
-		</div>
--->
 	</div>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
 	</script> 
