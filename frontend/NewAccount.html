@@ -16,6 +16,11 @@
 
     <title>Voluntold</title>
 
+	<!-- 
+	The createAccount function takes values from their respective fields, and
+	uses the makeuser endpoint to update the database with the newly specified user.
+	It checks for matching values in the password and confirm password fields to prevent potential password typos
+	-->
     <script>
     $.support.cors = true;
         function createAccount() {
@@ -49,7 +54,9 @@
                     
                   }); 
                    
-                } else {
+                } 
+		//Conditional statement triggered by password and confirm password fields mismatch
+		else {
                   	alert("Passwords do not match");
                 }
         }
