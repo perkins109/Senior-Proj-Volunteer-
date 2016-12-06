@@ -18,6 +18,7 @@ public class Events
 		this.events = events;
 	}
 
+	//Returns the specified name, if it exists within the database
 	public ResultSet nameSearch(String name) throws SQLException
 	{
 		ResultSet rs = events.results("SELECT * FROM events WHERE name LIKE '%" + name + "%'");
@@ -27,6 +28,7 @@ public class Events
 
 	}
 	
+	//Returns the specified date, if it exists within the database
 	public ResultSet dateSearch(String date) throws SQLException
 	{
 		ResultSet rs = events.results("SELECT * FROM events WHERE date LIKE '%" + date + "%'");
@@ -35,6 +37,7 @@ public class Events
 
 	}
 
+	//Increments the attendance count for the specified event (specified by ID)
 	public boolean attend(String id) throws SQLException 
 	{
 		Boolean rs = events.input("UPDATE events SET attendanceCOUNT = attendanceCOUNT + 1 WHERE id = '" + id + "'");
@@ -43,6 +46,7 @@ public class Events
 		return rs;
 	}
 	
+	//Adds an event into the database from an event POJO
 	public String add(EventPOJO event) throws SQLException 
 	{
 		try
@@ -79,7 +83,7 @@ public class Events
 		}
 	}
 			     
-		
+		//Updates the specified event from an event POJO
 		public String edit(EventPOJO event, String id) throws SQLException 
 		{
 			try
@@ -111,12 +115,16 @@ public class Events
 		
 	}
 
-		
+		/*
+		Returns all events within the specified radius
+		The area is calculated using the Haversine formula for Great Circle distances
+		*/
 		public ResultSet locationSearch(String lat, String lng, String radius) throws SQLException 
 		{
 			ResultSet rs = null;
 			try
 			{
+				//This is the Haversine formula implementation
 			 String query = "SELECT *, ( 3959 * acos( cos( radians(?) ) * "
 			 		+ "cos( radians( lat ) ) * cos( radians( lng ) - radians(?) ) + sin( radians(?) ) *"
 			 		+ " sin( radians( lat ) ) ) ) AS distance FROM events having distance < ? ORDER BY distance LIMIT 0 , 20;";
