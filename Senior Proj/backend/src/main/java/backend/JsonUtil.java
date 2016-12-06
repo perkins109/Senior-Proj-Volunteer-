@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 public class JsonUtil 
 {
+	//Converts the specified resultSet into a Json Object
 	public static JsonObject convertToJSON(ResultSet resultSet, String name)
             throws Exception 
 	{
