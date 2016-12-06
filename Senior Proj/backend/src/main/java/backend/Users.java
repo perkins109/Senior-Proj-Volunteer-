@@ -14,6 +14,7 @@ public class Users
 		this.users = users;
 	}
 
+	//Compares specified username and password against user database for exact match
 	public boolean userValidate(String un, String pw) throws SQLException
 	{
 		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"' AND password = '"+pw+"'");
@@ -24,6 +25,7 @@ public class Users
 
 	}
 	
+	//Creates an entry in user database with specified username, password, email address, location, phone number, and sex 
 	public Boolean addUser(String un, String pw, String em, String loc, String ph, String sex) throws SQLException
 	{
 		Boolean rs = users.input("INSERT INTO users (userName, password, email, homeLocation, phone, sex) VALUES"
@@ -34,6 +36,7 @@ public class Users
 
 	}
 	
+	//Getter for username
 	public ResultSet getUser(String un) throws SQLException
 	{
 		ResultSet rs = users.results("SELECT * FROM users WHERE userName = '"+ un +"'");
@@ -43,6 +46,7 @@ public class Users
 
 	}
 
+	//Updates specified username entry's corresponding password, assuming matching old password is supplied
 	public Boolean changePw(String un, String currentPW, String newPW) throws SQLException 
 	{
 		
@@ -54,6 +58,7 @@ public class Users
 
 	}
 	
+	//Getter for events attended for a specified username
 	public  ResultSet getEventsAtt(String un) throws SQLException
 	{
 		String id = null;
@@ -62,6 +67,8 @@ public class Users
 		if(rs.next())
 			id = rs.getString("user_id");
 		ResultSet retVal = users.results("SELECT * FROM events, eventsAttended WHERE eventsAttended.user_id = '"+ id +"' AND eventsAttended.eventsAttended = events.id");
+		
+		//error checking
 		System.out.println("nick");
 
 		
@@ -69,6 +76,7 @@ public class Users
 
 	}
 	
+	//Getter for events created for a specified username
 	public  ResultSet getEventsCreated(String un) throws SQLException
 	{
 		String id = null;
@@ -84,6 +92,7 @@ public class Users
 
 	}
 	
+	//Adds an event by ID to a specified username's corresponding eventsAttended field
 	public Boolean attend(String eventID, String un) throws SQLException 
 	{
 		
@@ -95,6 +104,7 @@ public class Users
 
 	}
 
+	//Adds a fully specified user into the users database from a corresponding user POJO
 	public String add(UserPOJO userpojo) 
 	{
 		try
@@ -124,6 +134,7 @@ public class Users
 		
 	}
 
+	//Uses a user POJO and specified username to update an entry in the users database
 	public String edit(UserPOJO user, String un) 
 	{
 		try
