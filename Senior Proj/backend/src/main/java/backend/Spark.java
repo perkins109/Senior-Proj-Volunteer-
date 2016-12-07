@@ -22,10 +22,14 @@ public class Spark
 	 
 	public static void main(String[] args) throws SQLException, Exception 
 	{
+		
 		DBConnector db = new DBConnector("voluntold");
 		Users user = new Users(db);
 		Events event = new Events(db);
 		
+		
+		//host static files
+		staticFiles.location("/web");
 	
 		
 		JsonUtil json = new JsonUtil();
@@ -132,6 +136,8 @@ public class Spark
 			System.out.println("here");	
 			return user.edit(userpojo, userpojo.getUsername());
 		});
+		
+		
 		
 		
 		
