@@ -45,8 +45,10 @@
 
 	<title>Voluntold</title>
     <script>
+	    //declaration of Google Maps Geocoding API
         var geocoder;
         
+	    //Initalizes Google Maps Geocoder
     function initMap() {
          geocoder = new google.maps.Geocoder();
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -63,6 +65,8 @@
 	<script>
          $.support.cors = true;
     
+		//Creates an event to add to Voluntold database
+		//Utilizes Google Maps Geocoding API
         function creatingEvents() {
                 
             console.log("Work");
@@ -74,6 +78,7 @@
                 var event_name = document.getElementById('event_name').value;
                 var address = document.getElementById("event_location").value;
                     
+		//Converts lat/long coords to street address via Google Maps Geocoding API
             geocoder.geocode({
                 'address': address
             }, function(results, status) {
@@ -101,8 +106,10 @@
                 var date = document.getElementById('date').value;
                 var time = document.getElementById('time').value;
             
-                
+       
                 var validate = "http://localhost:4567/add/event";
+		
+		//JSON format for event data
                 var data = JSON.stringify(
                 	{
                   		"name" : event_name,
@@ -118,6 +125,7 @@
                   	}
                 );
             
+		//Posts event to the Voluntold database
                 $.ajax({
             	    type: "POST",
                     url: validate, 
