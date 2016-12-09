@@ -1,0 +1,8 @@
+<div id="form2" class="form2" style="margin-left: 2%; margin-top: 0%">
+		<input type="datetime-local" name="date" id="date1"
+			value="Start Date:" /> <input type="datetime-local" name="date"
+			id="date2" value="End Date:" />
+
+		<script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	</div>
