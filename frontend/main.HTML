@@ -13,6 +13,7 @@
 	<script src="jquery-3.1.1.js">
 	</script>
 	<script>
+		//Declaration of Google Map and its corresponding elements
 	           var map;
 	           var circle;
 	           var markers = new Array();
@@ -21,6 +22,7 @@
 	       
 	          function initMap() {
 	           
+			  //Initializes Google Map
 	              map = new google.maps.Map(document.getElementById('map'), {
 	                  zoom: 13,
 	                  center: {
@@ -29,10 +31,10 @@
 	                  }
 	              });
 	              
-	              
+	              //Initalizes Map Markers
 	              var startMarker = new google.maps.Marker({map: map});
 	               markers.push(startMarker);
-	       
+	       //Centers the Map on the user's position
 	       if (navigator.geolocation) {
 	         navigator.geolocation.getCurrentPosition(function(position) {
 	           var pos = {
@@ -51,29 +53,29 @@
 	       }
 	   
 	              var geocoder = new google.maps.Geocoder();
-	              
+	              //Listens for click on Address search
 	              document.getElementById('Address_search').addEventListener('click', function() {
 	                  geocodeAddress(geocoder, map);
 	              });
-	              
+	              //Listens for click on Name search
 	              document.getElementById('Name_search').addEventListener('click', function() {
 	                  NameSearch();
 	              });
-	              
+	              //Listens for click on Date search
 	              document.getElementById('Date_search').addEventListener('click', function() {
 	                  DateSearch();
 	              });   
 	          }
-	       
+	       //Error catch
 	          function handleLocationError(browserHasGeolocation, pos) {
-	      
+	  
 	       alert(browserHasGeolocation ?
 	                             'Error: The Geolocation service failed.' :
 	                             'Error: Your browser doesn\'t support geolocation.');
 	     }
 	       
 	     
-	       
+	       //Displays the results for a search within a Circle on the Map, using Zip code and search radius
 	          function geocodeAddress(geocoder, resultsMap) {
 	              var address = document.getElementById('Zip').value;
 	              geocoder.geocode({
@@ -92,7 +94,7 @@
 	                          center: results[0].geometry.location,
 	                          radius: Meter_radius
 	                      });
-	                      
+	                      //Error catch
 	                  } else {
 	                      alert('Geocode was not successful for the following reason: ' + status);
 	                  }
@@ -100,6 +102,7 @@
 	              });
 	          }
 	          
+		//Creates a Marker on the Map from latitude and longitude coordinates, passed as a single parameter
 	          function createMarker(latLong) {
 	              var marker = new google.maps.Marker({ 
 	                  position: latLong,
@@ -109,6 +112,9 @@
 	              return marker;
 	          }
 	          
+		//Creates the info window for events
+		//uses a listener to identify user clicks
+		//clicking on a Marker brings up the corresponding event info
 	          function createInfoWindow(desc, marker) {
 	              var infowindow = new google.maps.InfoWindow(); 
 	              
@@ -121,9 +127,12 @@
 	              })(desc));  
 	          }
 	          
+		//Creates the description for an event
+		//The description appears when the user clicks on a Marker within the Map
 	          function createDesc(obj, marker){
 	              var dateArray = obj.events.date.split("-");
 	              
+			  //Initalizes the popup description as a concatenation of event name, date, time, and description
 	              var desc = '<div id="name">' + obj.events[x].name + '<\/div>' + 
 	                          '<div id="date">' + dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0] + '<\/div>' + 
 	                          '<div id="time">' + obj.events[x].time.split(" ")[1] + '<\/div>' +
@@ -135,6 +144,7 @@
 	              return desc;
 	          }
 	         
+		//Creates the bounds to display a set area of Markers
 	          function createBounds(markers){
 	              var bounds = new google.maps.LatLngBounds();
 	              for (var i = 0; i < markers.length; i++) {
@@ -144,6 +154,7 @@
 	              return bounds;
 	          }
 	       
+		//Removes any Markers from the Map
 	        function clearMarkers(){
 	            if(markers.length > 0){
 	                           for (var i = 0; i < markers.length; i++) {
@@ -152,9 +163,9 @@
 	                      }
 	                      markers = [];
 	        }
-	          
+	          //Allows the user to search for events by Name
 	          function NameSearch() {
-	              
+	              //GET request to Voluntold database for events with the specified name
 	              console.log(validate);
 	              $.support.cors = true;
 	              $.ajax({
@@ -165,12 +176,13 @@
 	                      clearMarkers();
 	         try{
 	                                  var obj = JSON.parse(data.responseText);
-	                      
+	                      //If no objects found, return error message
 	                      if (obj.events.length == 0){
 	                          alert("No Results found. Please try a new Search");
 	                          document.getElementById("Desc").value = "";
 	                          return;
 	                      }
+			 //Populates the Map with event Markers and their respective descriptions
 	                      else {
 	                      for (x = 0; x < obj.events.length; x++) {                                          
 	                          var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
@@ -179,11 +191,13 @@
 	                          createInfoWindow(desc, marker);                           
 	                          markers.push(marker);
 	                          
-	                      }                       
+	                      }               
+				      //Fits the map to specified bounds
 	                      var bounds = createBounds(markers)
 	                      map.fitBounds(bounds);
 	                  }
 	                      }
+				  //Error catch
 	                      catch(err){
 	                          if(data.status == 500)
 	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
@@ -192,9 +206,10 @@
 	              });
 	          }
 	       
+		//Allows the user to search for events by Date
 	          function DateSearch() {
 	              var dateArray = document.getElementById("Date").value.split("/");
-	   
+	   //GET request to Voluntold database for events within specified date range
 	              $.support.cors = true;
 	              $.ajax({
 	                  type: "GET",
@@ -204,12 +219,13 @@
 	                      clearMarkers();
 	                      try {
 	                      var obj = JSON.parse(data.responseText);
-	                      
+	                      //If no objects found, return error message
 	                       if (obj.events.length == 0){
 	                          alert("No Results found. Please try a new Search");
 	                          document.getElementById("Date").value = "";
 	                          return;
 	                      }
+				      //Populates the map with event Markers and their respective descriptions
 	                      else {
 	                          
 	                      for (x = 0; x < obj.events.length; x++) {
@@ -219,12 +235,14 @@
 	                          var desc = createDesc(obj, marker);                     
 	                          createInfoWindow(desc, marker);                           
 	                          markers.push(marker);
-	                      }                       
+	                      }        
+				      //Fits the Map to the specified bounds
 	                      var bounds = createBounds(markers)
 	                      map.fitBounds(bounds);
 	                          
 	                      }
 	                      }
+				  //Error catch
 	                      catch(err){
 	                          if(data.status == 500)
 	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
@@ -232,9 +250,9 @@
 	                  }
 	              });
 	          }
-	       
+	       //Allows the user to search for events by Address
 	          function AddressSearch(lat, long) {
-	             
+	             //GET request to Voluntold database for events with the specified Address 
 	              $.support.cors = true;
 	              $.ajax({
 	                  type: "GET",
@@ -243,12 +261,13 @@
 	                      clearMarkers();
 	                      try{  
 	                      var obj = JSON.parse(data.responseText);
-	                      
+	                      //If no events found, display error message
 	                       if (obj == null){
 	                          alert("No Results found. Please try a new Search");
 	                          document.getElementById("Zip").value = "";
 	                          return;
 	                      }
+				//Populate the map with event Markers and their respective descriptions
 	                      else {
 	                          
 	                      for (x = 0; x < obj.events.length; x++) {
@@ -259,10 +278,11 @@
 	                          createInfoWindow(desc, marker);                           
 	                          markers.push(marker);
 	                      }             
-	                          
+	                          //Fits the map to the specified bounds
 	                      map.fitBounds(circle.getBounds());
 	                  }
 	                      }
+				  //Error catch
 	                      catch(err){
 	                          if(data.status == 500)
 	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
