@@ -3,7 +3,8 @@ import java.sql.*;
 
 public class DBConnector 
 {
-	//Declaes connection variable
+	//dave dont touch this code
+	//declares connection variable
 	private static Connection con;
 	public DBConnector(String dbName)
 	{

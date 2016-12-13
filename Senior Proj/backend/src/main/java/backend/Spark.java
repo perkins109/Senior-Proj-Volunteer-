@@ -29,9 +29,10 @@ public class Spark
 		
 		
 		//host static files
-		staticFiles.location("/web");
+		//staticFiles.location("/web");
+		staticFiles.externalLocation(System.getProperty("java.io.tmpdir"));
 	
-		
+		System.out.println(System.getProperty("java.io.tmpdir"));
 		JsonUtil json = new JsonUtil();
 		Gson gson = new Gson();
 		
