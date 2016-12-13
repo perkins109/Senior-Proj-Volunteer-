@@ -29,9 +29,25 @@
                 var validate = "http://localhost:4567/user/" + userEmail + "/" + userPwd;
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:4567/user/admin/admin",
+                    url: validate,
                 	complete: function(data) {
-						window.location.href = 'main.html';
+                        try{
+                            var valid = data.responseText;
+                            
+                            if(valid == "true"){
+                                window.location.href = 'main.html';
+                            }
+						      
+                                else{
+                                    alert("Incorrect username or password! " + valid);
+                                }
+                                    
+                        }
+                         catch(err){
+	                          if(data.status == 500)
+	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
+	                      }
+                        
 					}
 					
                 });
