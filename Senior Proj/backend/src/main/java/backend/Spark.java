@@ -30,6 +30,7 @@ public class Spark
 		
 		//host static files
 		//staticFiles.location("/web");
+		//host them from the temp file so everyone can change them locally
 		staticFiles.externalLocation(System.getProperty("java.io.tmpdir"));
 	
 		System.out.println(System.getProperty("java.io.tmpdir"));
