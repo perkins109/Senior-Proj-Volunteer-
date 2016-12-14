@@ -103,8 +103,10 @@
                 var status = true;
                 
             
-                var date = document.getElementById('date').value;
+                
+		var date1 = document.getElementById('date').value.split("-");
                 var time = document.getElementById('time').value;
+		var date = date1[2] + "-" + date1[0] + "-" + date1[1];
             
        
                 var validate = "http://localhost:4567/add/event";
@@ -248,7 +250,7 @@
 					</div>
 
 					<div class="col-xs-4">
-						<input class="form-control" id="date" placeholder="Date">
+						<input class="form-control" id="date" placeholder="yyyy-mm-dd">
 					</div>
 
 					<div class="col-xs-4">
