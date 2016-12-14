@@ -105,7 +105,7 @@
             
                 
 		var date1 = document.getElementById('date').value.split("-");
-                var time = document.getElementById('time').value;
+                var time = "2016-01-01 " + document.getElementById('time').value + ":00.0";
 		var date = date1[2] + "-" + date1[0] + "-" + date1[1];
             
        
@@ -262,7 +262,7 @@
 					</div>
 
 					<div class="col-xs-4">
-						<input class="form-control" id="time" placeholder="Time">
+						<input class="form-control" id="time" placeholder="hh:mm">
 					</div>
 
 					<div class="col-xs-4">
