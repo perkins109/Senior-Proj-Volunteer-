@@ -136,7 +136,7 @@
                   var direct = 'https:\/\/maps.google.com/maps?saddr=' + document.getElementById("Zip").value + '&daddr=' + marker.position;
 	              var desc = '<div id="name">' + event.name + '<\/div>' + 
 	                          '<div id="date">' + dateArray[1] + "-" + dateArray[2] + "-" + dateArray[0] + '<\/div>' + 
-	                          '<div id="time">' + event.time.split(" ")[1] + '<\/div>' +
+	                          '<div id="time">' + event.time.split(" ")[1].split(".")[0] + '<\/div>' +
 	                          '<div id="desc">' + event.description + '<\/div>' +
 	                          '<button onclick=alert()>Attend<\/button>';
 	           if (document.getElementById("Zip").value != "") { 
