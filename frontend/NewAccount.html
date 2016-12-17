@@ -29,6 +29,9 @@
                 var phoneNumber = document.getElementById('PhoneNumber').value;
                 var password = document.getElementById('password').value;
                 var confirmPassword = document.getElementById('Confirmpassword').value;
+                
+                 if(checkForm(username, email, phoneNumber, password, confirmPassword)){
+               
                 if (password === confirmPassword) {
                   var validate = "http://localhost:4567/makeuser";
                   var data = JSON.stringify(
@@ -40,18 +43,21 @@
                   	}
                   );
 
-                  alert('Welcome! You are now a new user!');
+                  
                   $.ajax({
                     type: "POST",
                     url: validate, 
                     contentType: "application/json",
 					dataType: "json",
                     data: data, 
-                    
-                    success: function(data) {
-                    	alert("true");
-                    }
-                    
+                    success: function() {
+                    	//alert("true");
+                        alert('Welcome! You are now a new user!');
+                        window.location.href= "Login.html"
+                    },
+                    error: function(xhr){
+                      alert("something went wrong" + xhr.responseText);
+                  }
                   }); 
                    
                 } 
@@ -60,7 +66,19 @@
                   	alert("Passwords do not match");
                 }
         }
+        
+        else{
+            alert("All fields are mandatory. Thank You")
+        }
+        }
 
+        function checkForm(username, email, phone, pass, confpass){
+            if(username == "" || email == "" || phone == "" || pass == "" || confpass == ""){
+                return false;
+            }
+            
+                return true
+        }
 
     </script>
 
@@ -70,7 +88,7 @@
 
       <div class="container-fluid">
         <div class="page-header">
-          <h1><img src="C:/Users/Brian/Documents/Voluntold HTML/Voluntold.png" height="100" width="250"></h1>
+          <h1><img src="Voluntold.png" height="100" width="250"></h1>
           <p>The Volunteer Networking Page</p>
           </div>
     </div>
@@ -106,7 +124,7 @@
     <div class="form-group row">
      <div class="col-xs-4"></div>
       <div class="col-xs-4">
-        <input class="form-control" type="Email" placeholder="YourEmail@Voluntold.com" id="Email">
+        <input class="form-control" type="email" placeholder="YourEmail@Voluntold.com" id="Email">
       </div>
         <div class="col-xs-4"></div>
     </div>
@@ -118,23 +136,16 @@
       </div>
         <div class="col-xs-4"></div>
     </div>
-        <div align="center">
-<button onclick="createAccount()" id="submit" class="btn btn-default btn-block" type="submit" >Submit</button>
+        <div class="row">
+            <div class="col-md-5"></div>
+        				<div class="col-md-2">
+                            <button onclick="createAccount()" id="submit" class="btn btn-default btn-block" type="button" >Submit</button>
         </div> 
+            <div class="col-md-5"></div>
+        </div>
     </form>
     </div>
 
-<!--
-    <script type="text/javascript">
-    //Initialize the Amazon Cognito credentials provider
-    AWS.config.region = 'us-east-1'; // Region
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'us-east-1:8df560c2-12ca-4a34-9505-5f1d7e3d0ef1',
-    });
-    //Initialize the Cognito Sync client
-          });
-       });
-    });
-    </script>
-    -->
+        </body> 
+        
     </html>
