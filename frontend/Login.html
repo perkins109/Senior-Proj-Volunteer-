@@ -24,9 +24,9 @@
     <script>
         function login() {
         	$.support.cors = true;
-                var userEmail = document.getElementById('email').value;
+                var userN = document.getElementById('userNa').value;
                 var userPwd = document.getElementById('pwd').value;
-                var validate = "http://localhost:4567/user/" + userEmail + "/" + userPwd;
+                var validate = "http://localhost:4567/user/" + userN + "/" + userPwd;
                 $.ajax({
                     type: "GET",
                     url: validate,
@@ -35,11 +35,12 @@
                             var valid = data.responseText;
                             
                             if(valid == "true"){
+                                sessionStorage.setItem("userName", userN);
                                 window.location.href = 'main.html';
                             }
 						      
                                 else{
-                                    alert("Incorrect username or password! " + valid);
+                                    alert("Incorrect username or password!");
                                 }
                                     
                         }
@@ -72,6 +73,19 @@
 		</div>
 	</div>
 
+    
+    <div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        
+        <div class="col-md-4" style="text-align: center">
+        <h1>Welcome to Voluntold</h1>
+        <h3>The hub for all your Volunteering events</h3>
+        <h6>Sign in below or create a new account to start finding your volunteering opportunity<h6?>
+        </div>
+        
+    </div>
 	<div>
 		<form>
 			<div class="row">
@@ -80,7 +94,7 @@
 
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="email">Email address:</label> <input class="form-control" id="email" >
+						<label for="email">User Name:</label> <input class="form-control" id="userNa" >
 					</div>
 				</div>
 
@@ -111,7 +125,7 @@
 
 
 				<div class="col-md-2">
-					<button onclick="login()" id="submit" class="btn btn-default btn-block" type="submit" >Submit</button>
+					<button onclick="login()" id="submit" class="btn btn-default btn-block" type="button" >Submit</button>
 				</div>
 
 
@@ -154,7 +168,7 @@
 				</div>
 
 
-				<div class="col-md-2">
+				<div class="col-md-2" style="text-align: center">
                     <!-- Send to create new user page -->
 					<a href="NewAccount.html">Create New User?</a>
 				</div>
