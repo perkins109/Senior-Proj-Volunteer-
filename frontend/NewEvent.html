@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"><!-- jQuery library -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script><!-- Latest compiled JavaScript -->
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+	</script>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<style>
+	          
+	          .navbar-default .navbar-nav > li > a{
+	              color: red;
+	              border-color: red;
+	              font-size: 1.8em;
+	          }
+	          
+	          
+	          .navbar-default {
+	              border-color: red;
+	              background-color: white;
+	          }
+	          
+	          .well {
+	              background-color: rgb(250,200,200);
+	              border-color: red;            
+	          }
+	          
+	          .divider {
+	              height: 2px;
+	              background-color: black;
+	              width:100%;
+	              display:block;
+	              overflow: hidden;
+	           }
+	          
+	   }
+	</style>
+
+	<title>Voluntold</title>
+    <script>
+	    //declaration of Google Maps Geocoding API
+        var geocoder;
+        
+        var lat;
+        var long;
+        
+	    //Initalizes Google Maps Geocoder
+    function initMap() {
+         geocoder = new google.maps.Geocoder();
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {
+                    lat: 39.71,
+                    lng: -75.12
+                }
+            });
+        
+       
+        }
+        
+    </script>
+
+	<script>
+         $.support.cors = true;
+    
+		//Creates an event to add to Voluntold database
+		//Utilizes Google Maps Geocoding API
+        function getLatLong(){
+                
+                console.log("Work");
+                
+                var address = document.getElementById("event_location").value;
+                    
+		//Converts lat/long coords to street address via Google Maps Geocoding API
+            geocoder.geocode({
+                'address': address
+            }, function(results, status) {
+                    console.log(status);
+                
+                if (results != null) {
+                    lat = results[0].geometry.location.lat();
+                    long = results[0].geometry.location.lng();
+                    console.log(lat);
+                } else {
+                    console.log('Location entered not valid');
+                }
+                
+            }              
+            );
+        }
+            
+        function creatingEvents() {
+                var description = document.getElementById('description').value;
+                var count = 0;
+                var owner = "admin";
+                var email = "admin@admin.com";
+                var status = true;
+                var event_name = document.getElementById('event_name').value;
+                
+              
+                
+		        var date1 = document.getElementById('date').value.split("-");
+                var time = "2016-01-01 " + document.getElementById('time').value + ":00.0";
+		        var date = date1[2] + "-" + date1[0] + "-" + date1[1];
+            
+       
+                var validate = "http://localhost:4567/add/event";
+		
+		//JSON format for event data
+                var data = JSON.stringify(
+                	{
+                  		"name" : event_name,
+                        "status" : status,
+                  		"description": description,
+                    	"date": date,
+                        "time": time,
+                        "lat" : lat,
+                        "lng" : long,
+                        "attendancecount" : count,
+                        "owner": owner,
+                        "contactemail" : email 
+                    }
+                );
+            
+                
+		//Posts event to the Voluntold database
+                $.ajax({
+            	    type: "POST",
+                    url: validate, 
+                    contentType: "application/json",
+					dataType: "json",
+                    data: data, 
+                    success: function() {
+                    	alert("Success");
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                      alert(thrownError);
+                }
+                    
+                });  
+                   
+        } 
+    </script>
+</head>
+
+<body>
+    
+	<div class="container-fluid">
+		<div class="page-header">
+			<!-- PATH TO IMAGE NEEDS TO BE CHANGED SO IT IS ACCESSIBLE FROM ANY COMPUTER -->
+
+            <div style="display: none" id="map"></div>
+			<h1><img height="100" src="Voluntold.PNG" width="250">
+			</h1>
+
+
+			<p>The Volunteer Networking Page</p>
+		</div>
+
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#">Home</a>
+					</li>
+
+
+					<li>
+						<a href="#">Create Event</a>
+					</li>
+
+
+					<li>
+						<a href="#">Your Events</a>
+					</li>
+
+
+					
+				</ul>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-user"></span> Profile Name</a>
+					</li>
+
+
+					<li>
+						<a href="#"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<div>
+			<h3>Create new Event</h3>
+		</div>
+
+		<hr class="divider">
+
+
+		<div>
+			<h6>Fill in the required information to create your new event.</h6>
+		</div>
+
+
+		<div>
+			<form>
+				<div class="form-group row">
+                    <div class="col-xs-4"></div>
+					<div class="col-xs-4">
+						<input class="form-control" id="event_name" type="text" placeholder="Event Name">
+					</div>
+
+
+					<div class="col-xs-4">
+					</div>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-xs-4">
+					</div>
+
+					<div class="col-xs-4">
+						<textarea class="form-control" id="description" rows="5" placeholder="Describe your event here..." ></textarea>
+					</div>
+                    <div class="col-xs-4">
+					</div>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-xs-4">
+					</div>
+
+					<div class="col-xs-4">
+						<input class="form-control" id="event_location" onblur="getLatLong()" type="text" placeholder="Event Location">
+					</div>
+					<div class="col-xs-4">
+					</div>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-xs-4">
+					</div>
+
+					<div class="col-xs-4">
+						<input class="form-control" id="date" placeholder="mm-dd-yyyy">
+					</div>
+
+					<div class="col-xs-4">
+					</div>
+				</div>
+                
+                <div class="form-group row">
+					<div class="col-xs-4">
+					</div>
+
+					<div class="col-xs-4">
+						<input class="form-control" id="time" placeholder="hh:mm">
+					</div>
+
+					<div class="col-xs-4">
+					</div>
+				</div>
+
+
+				<div align="center">
+                    <button id="submit" onclick="creatingEvents()" type="button">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap"></script>
+    
+</body>
+</html>
