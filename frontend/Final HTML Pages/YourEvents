@@ -147,7 +147,12 @@
 	               }
 			//Populates the Map with event Markers and their respective descriptions
 	               else {
-	                   for (x = 0; x < 4; x++) {                                          
+                       var c = obj.events.length;
+                       if(obj.events.length > 3){
+                           c = 3;
+                       }
+                       
+	                   for (x = 0; x < c; x++) {                                          
 	                       var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
 	                       var marker = createMarker(latLong);              
 	                       var desc = createDesc(obj.events[x], marker);                     
@@ -183,7 +188,11 @@
 	               }
 			//Populates the Map with event Markers and their respective descriptions
 	               else {
-	                   for (x = 0; x < 3; x++) {                                          
+                        var c = obj.events.length;
+                       if(obj.events.length > 3){
+                           c = 3;
+                       }
+	                   for (x = 0; x < c; x++) {                                          
 	                       var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
 	                       var marker = createMarker(latLong);              
 	                       var desc = createDesc(obj.events[x], marker);                     
@@ -259,7 +268,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="YourEvents.html" id="profileName"><span class="glyphicon glyphicon-user"></span></a>
+                        <a href="YourEvents2.0.html" id="profileName"><span class="glyphicon glyphicon-user"></span></a>
                     </li>
 
 
