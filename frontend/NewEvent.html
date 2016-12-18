@@ -117,7 +117,7 @@
                 var data = JSON.stringify(
                 	{
                   		"name" : event_name,
-                        "status" : status,
+                        "status" : status.toString(),
                   		"description": description,
                     	"date": date,
                         "time": time,
@@ -129,7 +129,7 @@
                     }
                 );
             
-                
+                alert(data);
 		//Posts event to the Voluntold database
                 $.ajax({
             	    type: "POST",
