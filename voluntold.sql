@@ -34,8 +34,9 @@ CREATE TABLE `events` (
   `contactEmail` varchar(150) NOT NULL,
   `lat` float(10,6) DEFAULT NULL,
   `lng` float(10,6) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,'Park Cleanup','true','clean up the park','2016-10-10','2016-01-01 10:00:00',1,'nick','perkins109@gmail.com',39.709862,-75.118950),(2,'Cancer walk','true','raise money for cancer awarness','2016-12-20','2016-01-01 07:00:00',0,'bob','bob@gmail.com',39.831432,-75.097733),(3,'beach cleanup','true','Clean the beach','2016-11-10','2016-01-01 15:00:00',0,'mike','mike@gmail.com',39.277615,-74.574600),(5,'Soup Kitchen Prep','true','Feed the Hungry','2016-11-20','2016-01-01 10:30:00',0,'Harry','potter@gmail.com',39.799778,-75.108032),(10,'10k Run','true','Run for cancer','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.316063,-74.605309),(11,'Help grandpa','true','Grandpa needs help','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.831432,-75.097733),(12,'Christmas Contest','true','Help Spread XMAS CHEER!!!!!','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.339836,-75.097733);
+INSERT INTO `events` VALUES (1,'Park Cleanup','true','clean up the park','2016-10-10','2016-01-01 10:00:00',1,'nick','perkins109@gmail.com',39.709862,-75.118950,NULL),(2,'Cancer walk','true','raise money for cancer awarness','2016-12-20','2016-01-01 07:00:00',0,'bob','bob@gmail.com',39.831432,-75.097733,NULL),(3,'beach cleanup','true','Clean the beach and get some rays','2016-11-10','2016-01-01 15:00:00',0,'mike','mike@gmail.com',39.277615,-74.574600,'Boardwalk Ocean City, NJ'),(5,'Soup Kitchen Prep','true','Feed the Hungry','2016-11-20','2016-01-01 10:30:00',0,'Harry','potter@gmail.com',39.799778,-75.108032,NULL),(10,'10k Run','true','Run for cancer','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.316063,-74.605309,NULL),(11,'Help grandpa','true','Grandpa needs help','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.831432,-75.097733,NULL),(12,'Christmas Contest','true','Help Spread XMAS CHEER!!!!!','2016-12-20','2016-01-01 10:30:00',0,'admin','potter@gmail.com',39.339836,-75.097733,NULL),(13,'Drain the Swamp','true','Help Donald Trump Clear out Washington','2016-11-10','2016-01-01 15:00:00',0,'DJT','DJT@gmail.com',39.277615,-74.574600,'Boardwalk Ocean City, NJ'),(14,'Drain the Swamp','true','Help Donald Trump Clear out Washington','2016-11-10','2016-01-01 15:00:00',0,'admin','DJT@gmail.com',39.277615,-74.574600,'Boardwalk Ocean City, NJ'),(15,'beach concert','true','Clean the beach and get some rays','2016-11-10','2016-01-01 15:00:00',0,'mike','mike@gmail.com',39.277615,-74.574600,'Boardwalk Ocean City, NJ'),(16,'night concert','true','Clean the beach and get some rays','2016-11-10','2016-01-01 15:00:00',0,'admin','mike@gmail.com',39.277615,-74.574600,NULL),(17,'night concert','true','Clean the beach and get some rays','2016-11-10','2016-01-01 15:00:00',0,'admin','mike@gmail.com',39.277615,-74.574600,NULL),(18,'bike ride ','true','ride for fun and a good cause','1992-10-09','2016-01-01 05:30:00',0,'admin','admin@admin.com',39.316063,-74.605309,NULL),(19,'bike ride ','true','ride for fun and a good cause','1992-10-09','2016-01-01 05:30:00',0,'admin','admin@admin.com',NULL,NULL,NULL),(20,'bike ride ','true','ride for fun and a good cause','1992-10-09','2016-01-01 05:30:00',0,'admin','admin@admin.com',NULL,NULL,NULL),(21,'bike ride ','true','ride for fun and a good cause','1992-10-09','2016-01-01 05:30:00',0,'admin','admin@admin.com',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +90,7 @@ CREATE TABLE `eventsCreated` (
   PRIMARY KEY (`eventsCreated_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `eventscreated_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +99,7 @@ CREATE TABLE `eventsCreated` (
 
 LOCK TABLES `eventsCreated` WRITE;
 /*!40000 ALTER TABLE `eventsCreated` DISABLE KEYS */;
-INSERT INTO `eventsCreated` VALUES (2,3,'10'),(3,3,'11'),(4,3,'12');
+INSERT INTO `eventsCreated` VALUES (2,3,'10'),(3,3,'11'),(4,3,'12'),(5,3,'14'),(6,3,'16'),(7,3,'17'),(8,3,'18'),(9,3,'19'),(10,3,'20'),(11,3,'21');
 /*!40000 ALTER TABLE `eventsCreated` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +120,7 @@ CREATE TABLE `users` (
   `homeLocation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `userName` (`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +129,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'test1','password',NULL,NULL,NULL,NULL),(2,'test2','test2',NULL,NULL,NULL,NULL),(3,'admin','admin',NULL,NULL,NULL,NULL),(7,'Bruce','banner',NULL,NULL,NULL,NULL),(8,'Tony','Hawk',NULL,NULL,NULL,NULL),(11,'Steve','jobs',NULL,NULL,NULL,NULL),(14,'BIll','shakspear',NULL,NULL,NULL,NULL),(15,'gianluca','password',NULL,NULL,NULL,NULL),(17,'ned','stark','6099263102','ts@strark.com','M','08244'),(18,'Nick','Perkins','6094570079','perkins109@gmail.com','M','08244'),(24,'arunn','password','6091234567','aruun@strark.com','M','08028');
+INSERT INTO `users` VALUES (1,'test1','password',NULL,NULL,NULL,NULL),(2,'test2','test2',NULL,NULL,NULL,NULL),(3,'admin','admin',NULL,NULL,NULL,NULL),(7,'Bruce','banner',NULL,NULL,NULL,NULL),(8,'Tony','Hawk',NULL,NULL,NULL,NULL),(11,'Steve','jobs',NULL,NULL,NULL,NULL),(14,'BIll','shakspear',NULL,NULL,NULL,NULL),(15,'gianluca','password',NULL,NULL,NULL,NULL),(17,'ned','stark','6099263102','ts@strark.com','M','08244'),(18,'Nick','Perkins','6094570079','perkins109@gmail.com','M','08244'),(24,'arunn','password','6091234567','aruun@strark.com','M','08028'),(25,'dave','hudson','6099263101','ts@strark.com',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -141,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-09 19:05:11
+-- Dump completed on 2016-12-18 12:16:23
