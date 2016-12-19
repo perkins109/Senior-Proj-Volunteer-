@@ -1,0 +1,151 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- AWS Cognito -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.9.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Voluntold</title>
+
+	<!-- 
+	The createAccount function takes values from their respective fields, and
+	uses the makeuser endpoint to update the database with the newly specified user.
+	It checks for matching values in the password and confirm password fields to prevent potential password typos
+	-->
+    <script>
+    $.support.cors = true;
+        function createAccount() {
+                var username = document.getElementById('username').value;
+                var email= document.getElementById('Email').value;
+                var phoneNumber = document.getElementById('PhoneNumber').value;
+                var password = document.getElementById('password').value;
+                var confirmPassword = document.getElementById('Confirmpassword').value;
+                
+                 if(checkForm(username, email, phoneNumber, password, confirmPassword)){
+               
+                if (password === confirmPassword) {
+                  var validate = "http://localhost:4567/makeuser";
+                  var data = JSON.stringify(
+                  	{
+                  		"username" : username,
+                  		"password": password,
+                    	"phone": phoneNumber,
+                    	"email": email
+                  	}
+                  );
+
+                  
+                  $.ajax({
+                    type: "POST",
+                    url: validate, 
+                    contentType: "application/json",
+					dataType: "json",
+                    data: data, 
+                    success: function() {
+                    	//alert("true");
+                        alert('Welcome! You are now a new user!');
+                        window.location.href= "Login.html"
+                    },
+                    error: function(xhr){
+                      alert("something went wrong" + xhr.responseText);
+                  }
+                  }); 
+                   
+                } 
+		//Conditional statement triggered by password and confirm password fields mismatch
+		else {
+                  	alert("Passwords do not match");
+                }
+        }
+        
+        else{
+            alert("All fields are mandatory. Thank You")
+        }
+        }
+
+        function checkForm(username, email, phone, pass, confpass){
+            if(username == "" || email == "" || phone == "" || pass == "" || confpass == ""){
+                return false;
+            }
+            
+                return true
+        }
+
+    </script>
+
+    </head>
+    <body>
+
+
+      <div class="container-fluid">
+        <div class="page-header">
+          <h1><img src="Voluntold.png" height="100" width="250"></h1>
+          <p>The Volunteer Networking Page</p>
+          </div>
+    </div>
+     <p align="center">Create New Account</p>
+    <div>
+        
+    <form>
+  
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+  <div class="col-xs-4">
+    <input class="form-control" type="text" placeholder="User Name" id="username">
+  </div>
+    <div class="col-xs-4"></div>
+</div>
+
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+  <div class="col-xs-4">
+    <input class="form-control" type="password" placeholder="Password" id="password">
+  </div>
+    <div class="col-xs-4"></div>
+</div>
+
+<div class="form-group row">
+     <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="password" placeholder="Confirm Password" id="Confirmpassword">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        
+    <div class="form-group row">
+     <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="email" placeholder="YourEmail@Voluntold.com" id="Email">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        
+<div class="form-group row">
+    <div class="col-xs-4"></div>
+      <div class="col-xs-4">
+        <input class="form-control" type="tel" placeholder="555-123-4567" id="PhoneNumber">
+      </div>
+        <div class="col-xs-4"></div>
+    </div>
+        <div class="row">
+            <div class="col-md-5"></div>
+        				<div class="col-md-2">
+                            <button onclick="createAccount()" id="submit" class="btn btn-default btn-block" type="button" >Submit</button>
+        </div> 
+            <div class="col-md-5"></div>
+        </div>
+    </form>
+    </div>
+
+        </body> 
+        
+    </html>

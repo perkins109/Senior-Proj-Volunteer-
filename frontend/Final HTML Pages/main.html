@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+	</script>
+    
+    <!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+	</script>
+    
+	<script src="jquery-3.1.1.js">
+	</script>
+	<script>
+		//Declaration of Google Map and its corresponding elements
+	           var map;
+	           var markers = new Array();
+                    var marker_image = "/home_marker.png";
+	           var pos;
+	           
+	       
+	          function initMap() {
+	           
+                  getUser();
+                  
+			  //Initializes Google Map
+	              map = new google.maps.Map(document.getElementById('map'), {
+	                  zoom: 13,
+	                  center: {
+	                      lat: 39.71,
+	                      lng: -75.12
+	                  }
+	              });
+	              
+	              //Initalizes map marker
+                  
+                  
+	       //Centers the Map on the user's position
+	       if (navigator.geolocation) {
+	         navigator.geolocation.getCurrentPosition(function(position) {
+	            pos = {
+	             lat: position.coords.latitude,
+	             lng: position.coords.longitude
+	           };
+                 
+	              var startMarker = new google.maps.Marker({
+                      map: map,
+                      position: pos,
+                      icon: marker_image
+                  });
+                  
+	               markers.push(startMarker);     
+               
+	           map.setCenter(pos);
+	         }, function() {
+	           handleLocationError(true, map.getCenter());
+	         });
+	       } else {
+	         // Browser doesn't support Geolocation
+	         handleLocationError(false, map.getCenter());
+	       }
+	   
+	              var geocoder = new google.maps.Geocoder();
+	              //Listens for click on Address search
+	              document.getElementById('Address_search').addEventListener('click', function() {
+	                  geocodeAddress(geocoder, map);
+	              });
+	              //Listens for click on Name search
+	              document.getElementById('Name_search').addEventListener('click', function() {
+	                  NameSearch();
+	              });
+	              //Listens for click on Date search
+	              document.getElementById('Date_search').addEventListener('click', function() {
+	                  DateSearch();
+	              });   
+	          }
+	       //Error catch
+	          function handleLocationError(browserHasGeolocation, pos) {
+	  
+	       alert(browserHasGeolocation ?
+	                             'Error: The Geolocation service failed.' :
+	                             'Error: Your browser doesn\'t support geolocation.');
+	     }
+	       
+	     
+        function getUser(){
+            var good = sessionStorage.userName;
+            
+            if (good != null){
+            var u = document.getElementById("profileName");
+            var uN = document.createTextNode(sessionStorage.userName);
+            u.appendChild(uN);
+            }
+            else{
+            window.location.href = 'Login.html';
+            }
+        }
+	       //Displays the results for a search within a radius  on the Map, using Zip code and search radius
+	          function geocodeAddress(geocoder, resultsMap) {
+	              var address = document.getElementById('Zip').value;
+	              geocoder.geocode({
+	                  'address': address
+	              }, function(results, status) {
+	                  if (status === 'OK') {
+	                      resultsMap.setCenter(results[0].geometry.location);
+	                      var marker = new google.maps.Marker({
+	                          map: resultsMap,
+	                          position: results[0].geometry.location,
+                              icon: marker_image
+	                      });
+	                      
+	                      var Meter_radius = document.getElementById("Radius_Search").value * 1609.34;
+	                      
+	                      //Error catch
+	                  } else {
+	                      alert('Geocode was not successful for the following reason: ' + status);
+	                  }
+	                  AddressSearch(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+	              });
+	          }
+	          
+		//Creates a Marker on the Map from latitude and longitude coordinates, passed as a single parameter
+	          function createMarker(latLong) {
+	              var marker = new google.maps.Marker({ 
+	                  position: latLong,
+	                  map: map,
+	              });
+	              return marker;
+	          }
+	          
+		//Creates the info window for events
+		//uses a listener to identify user clicks
+		//clicking on a Marker brings up the corresponding event info
+	          function createInfoWindow(desc, marker) {
+	              var infowindow = new google.maps.InfoWindow(); 
+	              
+	              google.maps.event.addListener(marker, 'click', (function(desc) {  
+	                  return function() {  
+	                      infowindow.setContent(desc);  
+	                      infowindow.open(map, this);
+	                      
+	                  }  
+	              })(desc));  
+	          }
+	          
+		//Creates the description for an event
+		//The description appears when the user clicks on a Marker within the Map
+	          function createDesc(event, marker){
+	              var dateArray = event.date.split("/");
+	              
+			  //Initalizes the popup description as a concatenation of event name, date, time, and description
+                  var direct = 'https:\/\/maps.google.com/maps?saddr=' + document.getElementById("Zip").value + '&daddr=' + marker.position;
+                  var directNoStart = 'https:\/\/maps.google.com/maps?daddr=' + marker.position;
+                  
+	              var desc =  '<div id="name">' + event.name + '<\/div>' +
+	                          '<div id="date">' + //dateArray[1] + "-" + dateArray[2] + "-" + dateArray[0] + '<\/div>' + 
+	                          '<div id="time">' + event.time.split(" ")[1].split(".")[0] + '<\/div>' +
+	                          '<div id="desc">' + event.description + '<\/div>' +
+	                          '<button onclick=attendEvent(' + event.id + ')>Attend<\/button>';
+	           if (document.getElementById("Zip").value != "") { 
+	                   desc = desc + '<button onclick="window.open(\''+direct+'\')">Directions<\/button>';
+	                           }
+                  else {
+                       desc = desc + '<button onclick="window.open(\''+directNoStart+'\')">Directions<\/button>';
+                  }
+	              return desc;
+	          }
+        
+        function attendEvent(eventId){
+             $.support.cors = true;
+	              $.ajax({
+	                  type: "GET",
+	                  url: "http://localhost:4567/events/attend/" + eventId,
+	                  complete: function(data) { 
+                          $.ajax({
+                              type: "GET",
+                              url: "/users/attend/" + sessionStorage.userName + "/" + eventId,
+                              complete: function(data) {
+                                  alert("You are going to this event!");
+                              }
+                          })
+                      }
+                  });
+        }
+	         
+		//Creates the bounds to display a set area of Markers
+	          function createBounds(markers){
+	              var bounds = new google.maps.LatLngBounds();
+	              for (var i = 0; i < markers.length; i++) {
+	                          bounds.extend(markers[i].getPosition());
+	              }
+                  
+	              return bounds;
+	          }
+	       
+		//Removes any Markers from the Map
+	        function clearMarkers(){
+	            if(markers.length > 0){
+	                           for (var i = 0; i < markers.length; i++) {
+	                               markers[i].setMap(null);
+	                           }
+	                      }
+	                      markers = [];
+                
+	        } 
+	          //Allows the user to search for events by Name
+	          function NameSearch() {
+	              //GET request to Voluntold database for events with the specified name
+	              
+	              $.support.cors = true;
+	              $.ajax({
+	                  type: "GET",
+	                  url: "http://localhost:4567/events/search/name/" + document.getElementById("Desc").value,
+	                  complete: function(data) { 
+	                      
+	                      clearMarkers();
+	         try{
+	                       var obj = JSON.parse(data.responseText);
+	                      //If no objects found, return error message
+	                      if (obj.events.length == 0){
+	                          alert("No Results found. Please try a new Search");
+	                          document.getElementById("Desc").value = "";
+	                          return;
+	                      }
+			 //Populates the Map with event Markers and their respective descriptions
+	                      else {
+                              var home_marker = new google.maps.Marker({
+	                          map: map,
+	                          position: pos,
+                              icon: marker_image
+	                      });
+                              markers.push(home_marker);
+                              
+	                      for (x = 0; x < obj.events.length; x++) {                                          
+	                          var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
+	                          var marker = createMarker(latLong);              
+	                          var desc = createDesc(obj.events[x], marker);                     
+	                          createInfoWindow(desc, marker);                           
+	                          markers.push(marker);
+	                          
+	                      }               
+				      //Fits the map to specified bounds
+	                      var bounds = createBounds(markers)
+	                      map.fitBounds(bounds);
+	                  }
+	                      }
+				  //Error catch
+	                      catch(err){
+	                          if(data.status == 500)
+	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
+	                      }
+                      }
+	              });
+	          }
+	       
+		//Allows the user to search for events by Date
+	          function DateSearch() {
+	              //var dateArray = document.getElementById("Date").value.split("/");
+	   //GET request to Voluntold database for events within specified date range
+	              $.support.cors = true;
+	              $.ajax({
+	                  type: "GET",
+	                  url: "http://localhost:4567/events/search/date/" + document.getElementById("Date").value, // dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0],
+	                  complete: function(data) { 
+	                      
+	                      clearMarkers();
+	                      try {
+	                      var obj = JSON.parse(data.responseText);
+	                      //If no objects found, return error message
+	                       if (obj.events.length == 0){
+	                          alert("No Results found. Please try a new Search");
+	                          document.getElementById("Date").value = "";
+	                          return;
+	                      }
+				      //Populates the map with event Markers and their respective descriptions
+	                      else {
+	                           var home_marker = new google.maps.Marker({
+	                          map: map,
+	                          position: pos,
+                              icon: marker_image
+	                      });
+                              markers.push(home_marker);
+	                      for (x = 0; x < obj.events.length; x++) {
+	                         
+	                          var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
+	                          var marker = createMarker(latLong);              
+	                          var desc = createDesc(obj.events[x], marker);                     
+	                          createInfoWindow(desc, marker);                           
+	                          markers.push(marker);
+	                      }        
+				      //Fits the Map to the specified bounds
+	                      var bounds = createBounds(markers)
+	                      map.fitBounds(bounds);
+	                          
+	                      }
+	                      }
+				  //Error catch
+	                      catch(err){
+	                          if(data.status == 500)
+	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
+	                      }
+	                  }
+	              });
+	          }
+	       //Allows the user to search for events by Address
+	          function AddressSearch(lat, long) {
+	             //GET request to Voluntold database for events with the specified Address 
+	              $.support.cors = true;
+	              $.ajax({
+	                  type: "GET",
+	                  url: "http://localhost:4567/events/search/location/" + document.getElementById("Radius_Search").value + "/" + lat + "/" + long,
+	                  complete: function(data) { 
+	                      clearMarkers();
+	                      try{  
+	                      var obj = JSON.parse(data.responseText);
+	                      //If no events found, display error message
+	                       if (obj == null){
+	                          alert("No Results found. Please try a new Search");
+	                          document.getElementById("Zip").value = "";
+	                          return;
+	                      }
+				//Populate the map with event Markers and their respective descriptions
+	                      else {
+	                          
+	                      for (x = 0; x < obj.events.length; x++) {
+	                         
+	                          var latLong = {lat: parseFloat(obj.events[x].lat), lng: parseFloat(obj.events[x].lng)}
+	                          var marker = createMarker(latLong);              
+	                          var desc = createDesc(obj.events[x], marker);                     
+	                          createInfoWindow(desc, marker);                           
+	                          markers.push(marker);
+	                      }             
+	                       var bounds = createBounds(markers)
+	                      map.fitBounds(bounds);
+	                  }
+	                      }
+				  //Error catch
+	                      catch(err){
+	                          if(data.status == 500)
+	                          alert("There appears to have been a " + data.statusText + ". Please try again. \nNo values have been returned");
+	                      }
+	                  }
+	              });
+	          }
+	          
+	</script>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<style>
+	       
+	      
+	       
+	          .navbar-default .navbar-nav > li > a {
+	              color: red;
+	              border-color: red;
+	              font-size: 1.8em;
+	          }
+	          .navbar-default {
+	              border-color: red;
+	              background-color: white;
+	          }
+	          .well {
+	              background-color: rgb(250, 200, 200);
+	              border-color: red;
+	          }
+	          .divider {
+	              height: 2px;
+	              background-color: black;
+	              width: 100%;
+	              display: block;
+	              overflow: hidden;
+	          }
+	          .dropdown > dropdown-menu > li {
+	              align-content: center;
+	              color: red;
+	          }
+	          .v-divider {
+	              margin-left: 5px;
+	              margin-right: 5px;
+	              width: 1px;
+	              height: 100%;
+	              border-left: 1px solid gray;
+	          }
+	      }
+	</style>
+
+	<title>Voluntold</title>
+</head>
+
+<body style="height: 100%">
+	<div class="container-fluid">
+		<div class="page-header" style="margin-top: 0px">
+			<h1><img height="80" src="Voluntold.PNG" width="250">
+			</h1>
+
+
+			<p>The Volunteer Networking Page</p>
+		</div>
+
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="main.html">Home</a>
+					</li>
+
+
+					<li>
+						<a href="newEvent.html">Create Event</a>
+					</li>
+				</ul>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="Yourevents.html" id="profileName"><span class="glyphicon glyphicon-user"></span> </a>
+					</li>
+
+
+					<li>
+						<a href="Login.html"><span class="glyphicon glyphicon-log-in"></span> LogOut</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<div class="row">
+			<div class="col-md-3">
+				<input class="form-control" id="Desc" placeholder="Enter Description" style="height: 75px" type="text">
+			</div>
+
+
+			<div class="col-md-1" style="border-right: 1px solid gray">
+				<button class="btn btn-default btn-block" id="Name_search" style="height: 75px; white-space: normal" type="submit"><span class="glyphicon glyphicon-search">Search by Name</span></button>
+			</div>
+
+
+			<div class="col-md-2">
+				<div class="form-group">
+					<input class="form-control" id="Zip" placeholder="Enter Address" style="height: 75px" type="text">
+				</div>
+			</div>
+
+
+			<div class="col-md-1" style="text-align:center;">
+				<div class="form-group" style="height: 75px">
+					<label for="sel1">Miles from Address</label> <select class="form-control" id="Radius_Search">
+						<option>
+							5
+						</option>
+
+						<option>
+							10
+						</option>
+
+						<option>
+							20
+						</option>
+
+						<option>
+							30
+						</option>
+					</select>
+				</div>
+			</div>
+
+
+			<div class="col-md-1" style="border-right: 1px solid gray">
+				<button class="btn btn-default btn-block" id="Address_search" style="height: 75px; white-space: normal" type="submit"><span class="glyphicon glyphicon-search">Search by Address</span></button>
+			</div>
+
+
+			<div class="col-md-3">
+				<input class="form-control" id="Date" min="2016-11-01" placeholder="Date" style="height: 75px" type="date">
+			</div>
+
+
+			<div class="col-md-1">
+				<button class="btn btn-default btn-block" id="Date_search" style="height: 75px; white-space: normal" type="submit"><span class="glyphicon glyphicon-search">Search by Date</span></button>
+			</div>
+		</div>
+
+
+		<div class="row" id="Map_div">
+			<div class="col-md-2">
+			</div>
+
+
+			<div class="col-md-8" id="map" style="height:550px;">
+				
+			</div>
+
+
+			<div class="col-md-2">
+			</div>
+		</div>
+
+		<hr class="divider">
+	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu-4KcG0rqgcA4O5CqxSjOCPTPBi6qqbg&callback=initMap">
+	</script> 
+	<script>
+	      var min = new Date();
+	          var day = min.getDate();
+	          var month = min.getMonth() + 1;
+	          var year = min.getFullYear();
+	          if (day < 10) {
+	              day = '0' + day
+	          }
+	          if (month < 10) {
+	              month = '0' + month
+	          }
+	          min = year + '-' + month + '-' + day;
+	          document.getElementById("Date").setAttribute("min", min);
+	          
+	</script>
+</body>
+</html>
